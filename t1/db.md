@@ -1,5 +1,5 @@
 pais:
-
+```sql
 INSERT INTO pais (id, moneda, paisnombre) VALUES
 (1, 'Australian Dollar', 'Australia'),
 (2, 'Euro', 'Austria'),
@@ -185,10 +185,10 @@ INSERT INTO pais (id, moneda, paisnombre) VALUES
 (200, 'Central African CFA franc', 'Zaire'),
 (201, 'West African CFA franc', 'Costa de Marfil'),
 (203, 'Zimbabwean Dollar', 'Zimbabue');
-
+```
 
 estado:
-
+```sql
 INSERT INTO estado (id, pais_id, nombre) VALUES
 (1, 1, 'New South Wales'),
 (2, 1, 'Queensland'),
@@ -474,3 +474,4 @@ INSERT INTO estado (id, pais_id, nombre) VALUES
 (286, 145, 'Benghazi'),
 (289, 147, 'Lusaka'),
 (290, 147, 'Kitwe');
+```
