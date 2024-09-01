@@ -9,9 +9,15 @@ npm i bootstrap@5.3.3
   ``` json
   "node_modules/bootstrap/dist/css/bootstrap.min.css"
   ```
+  ``` json
+  "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+  ```
 - En el apartado de {}build > {}options > []scripts
   ``` json
   "node_modules/jquery/dist/jquery.min.js",
   "node_modules/@popperjs/core/dist/umd/popper.min.js",
   "node_modules/bootstrap/dist/js/bootstrap.min.js"
+  ```
+  ``` json
+  "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
   ```
