@@ -9,6 +9,7 @@ npm i bootstrap@5.3.3
   ``` json
   "node_modules/bootstrap/dist/css/bootstrap.min.css"
   ```
+  o
   ``` json
   "./node_modules/bootstrap/dist/css/bootstrap.min.css"
   ```
@@ -18,6 +19,7 @@ npm i bootstrap@5.3.3
   "node_modules/@popperjs/core/dist/umd/popper.min.js",
   "node_modules/bootstrap/dist/js/bootstrap.min.js"
   ```
+  o
   ``` json
   "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
   ```
