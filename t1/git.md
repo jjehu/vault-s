@@ -84,3 +84,13 @@ para ver los cambios
 ```
 git diff
 ```
+
+### visualizar commit
+ver los commit
+```
+git log
+```
+ver los commit en una sola linea
+```
+git log --oneline
+```
