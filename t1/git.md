@@ -26,3 +26,24 @@ git config --global -h
 ```
 
 ### Comandos Basicos
+navegar
+```
+cd
+cd ..
+ls
+ls -a
+pwd
+```
+crear
+```
+mkdir nombre
+```
+dentro de la carpeta
+```
+git init
+```
+iniciar visual studio code
+
+```
+code .
+```
