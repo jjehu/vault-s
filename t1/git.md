@@ -72,9 +72,15 @@ git commit -m "mensaje"
 
 ### gitignore
 el archivo `.gitignore` es para que el commit ignore archivos del proyecto, dentro de este arvhico se puede ingresar nombres como tipos de archivos:
-ejm: ```
+ejm: 
+```
 .env
 node_modules
 *.jpg
 *.mp4
+```
+### git diff
+para ver los cambios
+```
+git diff
 ```
