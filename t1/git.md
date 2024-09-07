@@ -47,3 +47,25 @@ iniciar visual studio code
 ```
 code .
 ```
+
+### ADD, STATUS y COMMIT
+ver estado de la carpeta
+```
+git status
+```
+trackear archivo para commit
+```
+git add archivo
+```
+quitar archivo
+```
+git rm --cached archivo
+```
+restaurar al archivo anterior (quitar modificaciones de archivo y dejarlo hasta cuando se hizo git add al archivo)
+```
+git restore archivo
+```
+hacer commit con mensaje
+```
+git commit -m "mensaje"
+```
