@@ -96,6 +96,12 @@ git log --oneline
 ```
 
 ## git versiones
+
+### git branch y checkout
+ver sobre la rama actual que estamos
+```
+git branch
+```
 crear un nuevo branch desde la posicion actual con el nombre
 ```
 git branch nombre
@@ -104,6 +110,12 @@ posicionarse sobre el commit nombre
 ```
 git checkout nombre
 ```
+crear y posicionarse sobre la ramaNueva
+```
+git checkout -b ramaNueva
+```
+
+
 unir el commit actual con el commit nombre
 ```
 git merge nombre
