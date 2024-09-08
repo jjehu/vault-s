@@ -94,3 +94,25 @@ ver los commit en una sola linea
 ```
 git log --oneline
 ```
+
+## git versiones
+crear un nuevo branch desde la posicion actual con el nombre
+```
+git branch nombre
+```
+posicionarse sobre el commit nombre
+```
+git checkout nombre
+```
+unir el commit actual con el commit nombre
+```
+git merge nombre
+```
+posicionar el commit actual sobre el commit nombre
+```
+git rebase nombre
+```
+para posicionarse en el commit anterior con el hash
+```
+git checkout hash ^
+```
