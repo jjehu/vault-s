@@ -63,6 +63,7 @@ npm i bootstrap@5.3.3
   ```
   npm i bootstrap-icons
   ```
+En el apartado de {}build > {}options > []styles
   ``` json
   "./node_modules/bootstrap-icons/font/bootstrap-icons.min.css"
   ```
