@@ -58,6 +58,14 @@ npm i bootstrap@5.3.3
   "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
   ```
 
+### Instalación de Boostrap icon
+
+  ```
+  npm i bootstrap-icons
+  ```
+  ``` json
+  "./node_modules/bootstrap-icons/font/bootstrap-icons.min.css"
+  ```
 
 [recomendación youtube](https://youtube.com/playlist?list=PLZ2ovOgdI-kWDh3jDh-GvgToRlVfwIUFw&si=98hyjKgdAcgion-7)
 [recomendación youtube](https://youtu.be/soInCF7nbDw?t=18051)
