@@ -26,6 +26,16 @@ print("La superficie del cuadrado es")
 print(superficie)
 # no presenta ningún error sintáctico, pero luego de ingresar el valor del lado del cuadrado (por ejemplo el valor 10) obtenemos como resultado un valor incorrecto (imprime el 1000), esto debido que definimos incorrectamente la fórmula para calcular la superficie del cuadrado:
 ```
+### `Comentarios en Python`
+se realizan con el caracter # y """ o '''
+```python
+# Esta parte esta comentada
+"""
+estas partes estan
+comentadas
+:V
+"""
+```
 
 ## Lista
-> - [Estructuras condiciales y repetitivas](parte1.md)
+> - [Estructuras condiciales, repetitivas y operadores](parte1.md)
