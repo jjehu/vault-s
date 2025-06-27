@@ -1,5 +1,5 @@
 
-# Estructuras condicionales y repetitivas
+# Estructuras condicionales, repetitivas y operadores
 
 ## Condicionales - IF, ELSE, ELIF
 Condicinal simple:
