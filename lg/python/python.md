@@ -28,4 +28,4 @@ print(superficie)
 ```
 
 ## Lista
-> - [Estructuras condiciales y repetitivas](lg/python/parte1.md)
+> - [Estructuras condiciales y repetitivas](parte1.md)
