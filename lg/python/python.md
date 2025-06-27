@@ -1,10 +1,12 @@
 # APUNTES DE PYTHON🐍
 
+## Introducción
+
 > [!NOTE]
 > - [Instalar Python](https://www.python.org/downloads/)
 > - [Visual Studio](https://code.visualstudio.com/)
 
-### Errores de sintaxis y lógicos
+### `Errores de sintaxis y lógicos`
 Los erres de sintaxis son errores tipográficos, como por ejemplo indicar el nombre incorrecto de la función, nombres de variables incorrectas, falta de paréntesis, palabras claves mal escritas, etc.
 Un programa no se puede ejecutar por completo sin corregir absolutamente todos los errores sintácticos.
 Ejemplo: 
