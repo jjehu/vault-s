@@ -39,3 +39,9 @@ comentadas
 
 ## Lista
 > - [Estructuras condiciales, repetitivas y operadores](parte1.md)
+> - [Variables y metodos de cadenas](parte2.md)
+> - [Listas](parte3.md)
+> - [Funciones](parte4.md)
+> - [Tuplas y diccionarios](parte5.md)
+> - [Bibliotecas](parte6.md)
+> - [POO](parte7.md)
