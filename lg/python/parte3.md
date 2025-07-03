@@ -5,6 +5,11 @@
 
 `Creación de la lista por asignación`
 
+Definimos una lista vacia
+```python
+lista=[]
+```
+
 Para crear una lista por asignación debemos indicar sus elementos encerrados entre corchetes y separados por coma.
 ```python
 lista1=[10, 5, 3]                       # lista de enteros
@@ -25,4 +30,16 @@ meses=["enero", "febrero", "marzo", "abril"]
 print(meses[0]) # se muestra enero
 print(meses[3]) # se muestra abril
 print(meses) # se muestra ["enero", "febrero", "marzo", "abril"]
+```
+
+## Carga por teclado
+
+.append() nos permite agregar a la lista el elemento pasado por parametro
+```python
+lista=[10, 20, 30]
+print(len(lista))    # imprime un 3
+lista.append(100)
+print(len(lista))    # imprime un 4
+print(lista[0])      # imprime un 10
+print(lista[3])      # imprime un 100
 ```
