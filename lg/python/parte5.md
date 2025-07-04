@@ -70,6 +70,11 @@ productos={"manzanas":39, "peras":32, "lechuga":17}
 print(productos)
 ```
 ejercicio ejemplo:
+Confeccionar una agenda. Utilizar un diccionario cuya clave sea la fecha. Permitir almacenar distintas actividades para la misma fecha (se ingresa la hora y la actividad)
+Implementar las siguientes funciones:
+1) Carga de datos en la agenda.
+2) Listado completo de la agenda.
+3) Consulta de una fecha.
 ```python
 def cargar():
     agenda={}
