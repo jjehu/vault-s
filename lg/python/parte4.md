@@ -10,7 +10,6 @@ def nombre_de_funcion(nombre_parametro):
 ```
 ## Parámetros
 
-
 Se puede pasar mas de un parámetro
 ```python
 def nombre_de_funcion(val1, val2):
@@ -42,6 +41,25 @@ def titulo_subrayado(titulo,caracter="*"):
 titulo_subrayado("Sistema de Administracion")
 titulo_subrayado("Ventas","-")
 ```
+Se puede pasar una cantidad variable de parámetros
+```python
+def sumar(v1,v2,*lista):
+    suma=v1+v2
+    for x in range(len(lista)):
+        suma=suma+lista[x]
+    return suma
+
+# bloque principal
+
+print("La suma de 1+2")
+print(sumar(1,2))
+print("La suma de 1+2+3+4")
+print(sumar(1,2,3,4))
+print("La suma de 1+2+3+4+5+6+7+8+9+10")
+print(sumar(1,2,3,4,5,6,7,8,9,10))
+```
+
+## Retorno de lista
 
 Al crear una lista se guarda en la variable una referencia que es lo que retorna la función
 ```python
