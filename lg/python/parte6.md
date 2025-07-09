@@ -1,5 +1,5 @@
 
-# Bibliotecas
+# Bibliotecas Estandar
 
 En Python se incluye una biblioteca extra de funciones, variables, clases etc. que nos facilitan la resolución de problemas en una gran diversidad de áreas como matemáticas, estadísticas, compresión de datos, internet, interfaces visuales etc.
 
