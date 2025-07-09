@@ -106,4 +106,4 @@ empleado1.paga_impuestos()
 ```
 `El método __init__ carga por teclado el nombre del empleado y su sueldo, este método se ejecuta despues de que se crea un objeto de la clase Empleado`
 
-`el metodo __init__ puede tener mas parametros adeamas de self, encaso de que tenga más parametros ademas de self al crearse la clase se tendria que pasar los paramatros que esten en el metodo __ini__`
+`El metodo __init__ puede tener mas parametros adeamas de self, encaso de que tenga más parametros ademas de self al crearse la clase se tendria que pasar los paramatros que esten en el metodo __ini__`
