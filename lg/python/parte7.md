@@ -77,3 +77,33 @@ sintaxis del constructor:
 def __init__([parámetros]):
         [algoritmo]
 ```
+
+ejercicio ejemplo:
+Confeccionar una clase que represente un empleado. Definir como atributos su nombre y su sueldo. En el método __init__ cargar los atributos por teclado y luego en otro método imprimir sus datos y por último uno que imprima un mensaje si debe pagar impuestos (si el sueldo supera a 3000)
+```python
+class Empleado:
+
+    def __init__(self):
+        self.nombre=input("Ingrese el nombre del empleado:")
+        self.sueldo=float(input("Ingrese el sueldo:"))
+
+    def imprimir(self):
+        print("Nombre:",self.nombre)
+        print("Sueldo:",self.sueldo)
+
+    def paga_impuestos(self):
+        if self.sueldo>3000:
+            print("Debe pagar impuestos")
+        else:
+            print("No paga impuestos")
+
+
+# bloque principal
+
+empleado1=Empleado()
+empleado1.imprimir()
+empleado1.paga_impuestos()
+```
+`El método __init__ carga por teclado el nombre del empleado y su sueldo, este método se ejecuta despues de que se crea un objeto de la clase Empleado`
+
+`el metodo __init__ puede tener mas parametros adeamas de self, encaso de que tenga más parametros ademas de self al crearse la clase se tendria que pasar los paramatros que esten en el metodo __ini__`
