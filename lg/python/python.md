@@ -43,5 +43,5 @@ comentadas
 > - [Listas](parte3.md)
 > - [Funciones](parte4.md)
 > - [Tuplas y diccionarios](parte5.md)
-> - [Bibliotecas](parte6.md)
+> - [Bibliotecas Estandar](parte6.md)
 > - [POO](parte7.md)
