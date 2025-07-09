@@ -104,6 +104,11 @@ empleado1=Empleado()
 empleado1.imprimir()
 empleado1.paga_impuestos()
 ```
-`El método __init__ carga por teclado el nombre del empleado y su sueldo, este método se ejecuta despues de que se crea un objeto de la clase Empleado`
+> [!CAUTION]
+> - El método __init__ carga por teclado el nombre del empleado y su sueldo, este método se ejecuta despues de que se crea un objeto de la clase Empleado
+> - El metodo __init__ puede tener mas parametros adeamas de self, encaso de que tenga más parametros ademas de self al crearse la clase se tendria que pasar los paramatros que esten en el metodo __ini__
 
-`El metodo __init__ puede tener mas parametros adeamas de self, encaso de que tenga más parametros ademas de self al crearse la clase se tendria que pasar los paramatros que esten en el metodo __ini__`
+> [!TIP]
+> Se puede realizar la llamada de un método desde otro método de la clase haciendo uso de `self.` seguido del metodo o la variable de la clase, esto es como el `this` en otros lenguajes
+
+## Colaboración de clases
