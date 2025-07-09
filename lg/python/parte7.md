@@ -64,5 +64,16 @@ alumno2.mostrar_estado()
 
 self en python es como el this en otros lenguajes
 
-## Metodo __ini__ de la clase
+## Metodo __init__ de la clase
+El método __init__ es un método especial de una clase en Python. El objetivo fundamental del método __init__ es inicializar los atributos del objeto que creamos. El metodo __init__ reemplaza al metodo inicializar que se habia utilizado en el concepto anterior.
+Caracteristicas del metodo __init__:
+- Se ejecuta inmediatamente luego de crear un objeto.
+- El método __init__ no puede retornar dato.
+- el método __init__ puede recibir parámetros que se utilizan normalmente para inicializar atributos.
+- El método __init__ es un método opcional, de todos modos es muy común declararlo.
 
+sintaxis del constructor:
+```python
+def __init__([parámetros]):
+        [algoritmo]
+```
