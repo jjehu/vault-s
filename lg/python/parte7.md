@@ -112,3 +112,159 @@ empleado1.paga_impuestos()
 > Se puede realizar la llamada de un método desde otro método de la clase haciendo uso de `self.` seguido del metodo o la variable de la clase, esto es como el `this` en otros lenguajes
 
 ## Colaboración de clases
+Normalmente un problema resuelto con la metodología de programación orientada a objetos no interviene una sola clase, sino que hay muchas clases que interactúan y se comunican.
+
+ejercicio ejemplo:
+Un banco tiene 3 clientes que pueden hacer depósitos y extracciones. También el banco requiere que al final del día calcule la cantidad de dinero que hay depositado.
+Lo primero que hacemos es identificar las clases:
+Podemos identificar la clase Cliente y la clase Banco.
+Luego debemos definir los atributos y los métodos de cada clase:
+```
+Cliente		
+    atributos
+        nombre
+        monto
+    métodos
+        __init__
+        depositar
+        extraer
+        retornar_monto
+
+Banco
+    atributos
+        3 Cliente (3 objetos de la clase Cliente)
+    métodos
+        __init__
+        operar
+        depositos_totales
+```
+```python
+class Cliente:
+
+    def __init__(self,nombre):
+        self.nombre=nombre
+        self.monto=0
+
+    def depositar(self,monto):
+        self.monto=self.monto+monto
+
+    def extraer(self,monto):
+        self.monto=self.monto-monto
+
+    def retornar_monto(self):
+        return self.monto
+
+    def imprimir(self):
+        print(self.nombre,"tiene depositado la suma de",self.monto)
+
+
+class Banco:
+
+    def __init__(self):
+        self.cliente1=Cliente("Juan")
+        self.cliente2=Cliente("Ana")
+        self.cliente3=Cliente("Diego")
+
+    def operar(self):
+        self.cliente1.depositar(100)
+        self.cliente2.depositar(150)
+        self.cliente3.depositar(200)
+        self.cliente3.extraer(150)
+
+    def depositos_totales(self):
+        total=self.cliente1.retornar_monto()+self.cliente2.retornar_monto()+self.cliente3.retornar_monto()
+        print("El total de dinero del banco es:",total)
+        self.cliente1.imprimir()
+        self.cliente2.imprimir()
+        self.cliente3.imprimir()
+
+
+# bloque principal        
+
+banco1=Banco()
+banco1.operar()
+banco1.depositos_totales()
+```
+
+## Herencia
+La herencia significa que se pueden crear nuevas clases partiendo de clases existentes, que tendrá todas los atributos y los métodos de su 'superclase' o 'clase padre' y además se le podrán añadir otros atributos y métodos propios.
+
+clase padre
+Clase de la que desciende o deriva una clase. Las clases hijas (descendientes) heredan (incorporan) automáticamente los atributos y métodos de la la clase padre.
+
+Subclase
+Clase descendiente de otra. Hereda automáticamente los atributos y métodos de su superclase. Es una especialización de otra clase.
+Admiten la definición de nuevos atributos y métodos para aumentar la especialización de la clase.
+
+Se realiza la herencia de una clase de la siguiente manera:
+```python
+class Nombre_de_subclase(Nombre_de_clase_padre):
+```
+Para heredar las funciones se hace uso de super(). seguido del metodo a heredar (esto se hace dentro de la funcion a heredar):
+```python
+    super().__init__()
+```
+
+ejercicio ejemplo:
+Ahora plantearemos otro problema empleando herencia. Supongamos que necesitamos implementar dos clases que llamaremos Suma y Resta. Cada clase tiene como atributo valor1, valor2 y resultado. Los métodos a definir son cargar1 (que inicializa el atributo valor1), carga2 (que inicializa el atributo valor2), operar (que en el caso de la clase "Suma" suma los dos atributos y en el caso de la clase "Resta" hace la diferencia entre valor1 y valor2), y otro método mostrar_resultado.
+
+Si analizamos ambas clases encontramos que muchos atributos y métodos son idénticos. En estos casos es bueno definir una clase padre que agrupe dichos atributos y responsabilidades comunes.
+
+La relación de herencia que podemos disponer para este problema es:
+```
+  Operacion
+    |    |
+Resta   Suma
+```
+Solamente el método operar es distinto para las clases Suma y Resta (esto hace que no lo podamos disponer en la clase Operacion en principio), luego los métodos cargar1, cargar2 y mostrar_resultado son idénticos a las dos clases, esto hace que podamos disponerlos en la clase Operacion. Lo mismo los atributos valor1, valor2 y resultado se definirán en la clase padre Operacion.
+```python
+class Operacion:
+
+    def __init__(self):
+        self.valor1=0
+        self.valor2=0
+        self.resultado=0
+
+    def cargar1(self):
+        self.valor1=int(input("Ingrese primer valor:"))
+
+    def cargar2(self):
+        self.valor2=int(input("Ingrese segundo valor:"))
+
+    def mostrar_resultado(self):
+        print(self.resultado)
+
+    def operar(self):
+        pass
+
+
+class Suma(Operacion):
+
+    def operar(self):
+        self.resultado=self.valor1+self.valor2
+
+
+class Resta(Operacion):
+
+    def operar(self):
+        self.resultado=self.valor1-self.valor2
+
+
+# bloque princpipal
+
+suma1=Suma()
+suma1.cargar1()
+suma1.cargar2()
+suma1.operar()
+print("La suma de los dos valores es")
+suma1.mostrar_resultado()
+
+resta1=Resta()
+resta1.cargar1()
+resta1.cargar2()
+resta1.operar()
+print("La resta de los valores es:")
+resta1.mostrar_resultado()
+```
+```python
+```
