@@ -1,3 +1,4 @@
+[TOC]
 
 # POO
 Un objeto contiene información pública, lo que necesitan los otros objetos para interactuar con él e información privada, interna, lo que necesita el objeto para operar y que es irrelevante para los otros objetos de la aplicación.
@@ -266,5 +267,202 @@ resta1.operar()
 print("La resta de los valores es:")
 resta1.mostrar_resultado()
 ```
+
+## Variables de clase
+En algunas situaciones necesitamos almacenar datos que sean compartidos por todos los objetos de dicha clase, en esas situaciones debemos emplear variables de clase.
+Para definir una variable de clase lo hacemos dentro de la clase pero fuera de sus métodos:
 ```python
+class Persona:
+
+    variable=20
+    
+    def __init__(self,nombre):
+        self.nombre=nombre
+
+
+# bloque principal
+
+persona1=Persona("Juan")
+persona2=Persona("Ana")
+persona3=Persona("Luis")
+
+print(persona1.nombre) # Juan
+print(persona2.nombre) # Ana
+print(persona3.nombre) # Luis
+
+print(persona1.variable) # 20
+Persona.variable=5
+print(persona2.variable) # 5
+```
+## Método __str__
+Podemos hacer que se ejecute un método definido por nosotros cuando pasamos un objeto a la función print o cuando llamamos a la función str (convertir a string)
+Python nos permite redefinir el método que se debe ejecutar. Esto se hace definiendo en la clase el método especial __str__
+En el siguiente ejemplo si queremos que se muestre el nombre y apellido separados por coma cuando llamemos a la función print el código que debemos implementar es el siguiente:
+```python
+class Persona:
+    def __init__(self,nom,ape):
+        self.nombre=nom
+        self.apellido=ape
+
+    def __str__(self):
+        cadena=self.nombre+","+self.apellido
+        return cadena
+ 
+persona1=Persona("Jose","Rodriguez")
+print(persona1)
+```
+Como vemos debemos implementar el método __str__ y retornar un string, este luego será el que imprime la función print
+
+## Redefinición de los operadores matemáticos con objetos
+Python nos permite redefinir los operadores matemáticos cuando planteamos una clase.
+
+Los métodos especiales que debemos implementar son los siguientes:
+
+Para el operador +:
+`__add__(self,objeto2)`
+
+Para el operador -:
+`__sub__(self,objeto2)`
+
+Para el operador *:
+`__mul__(self,objeto2)`
+
+Para el operador //:
+`__floordiv__(self,objeto2)`
+
+Para el operador /:
+`__truediv__(self,objeto2)`
+
+ejercicio ejemplo:
+
+Desarrollar una clase llamada Lista, que permita pasar al método __init__ una lista de valores enteros.
+Redefinir los operadores +,-,* y // con respecto a un valor entero.
+```python
+class Lista:
+
+    def __init__(self, lista):
+        self.lista=lista
+
+    def imprimir(self):
+        print(self.lista)
+
+    def __add__(self,entero):
+        nueva=[]
+        for x in range(len(self.lista)):
+            nueva.append(self.lista[x]+entero)
+        return nueva
+
+    def __sub__(self,entero):
+        nueva=[]
+        for x in range(len(self.lista)):
+            nueva.append(self.lista[x]-entero)
+        return nueva
+
+    def __mul__(self,entero):
+        nueva=[]
+        for x in range(len(self.lista)):
+            nueva.append(self.lista[x]*entero)
+        return nueva
+
+    def __floordiv__(self,entero):
+        nueva=[]
+        for x in range(len(self.lista)):
+            nueva.append(self.lista[x]//entero)
+        return nueva
+    
+
+# bloque principal
+
+lista1=Lista([3,4,5])
+lista1.imprimir()
+print(lista1+10)
+print(lista1-10)
+print(lista1*10)
+print(lista1//10)
+```
+
+## Redefinición de los operadores relacionales con objetos
+
+Python también nos permite redefinir los operadores relacionales cuando planteamos una clase.
+
+Los métodos especiales que podemos implementar son los siguientes:
+
+Para el operador ==:
+`__eq__(self,objeto2)`
+
+Para el operador !=:
+`__ne__(self,objeto2)`
+
+Para el operador >:
+`__gt__(self,objeto2)`
+
+Para el operador >=:
+`__ge__(self,objeto2)`
+
+Para el operador <:
+`__lt__(self,objeto2)`
+
+Para el operador <=:
+`__le__(self,objeto2)`
+
+Es importante recordar que una redefinición de un operador tiene sentido si ayuda y hace más claro nuestro algoritmo.
+
+ejercicio ejemplo:
+
+Plantear una clase Rectangulo. Definir dos atributos (ladomenor y ladomayor). Redefinir el operador == de tal forma que tengan en cuenta la superficie del rectángulo. Lo mismo hacer con todos los otros operadores relacionales.
+```python
+class Rectangulo:
+
+    def __init__(self,lmenor,lmayor):
+        self.lmenor=lmenor
+        self.lmayor=lmayor
+        
+    def retornar_superficie(self):
+        return self.lmenor*self.lmayor
+    
+    def __eq__(self,objeto2):
+        if self.retornar_superficie()==objeto2.retornar_superficie():
+            return True
+        else:
+            return False
+
+    def __ne__(self,objeto2):
+        if self.retornar_superficie()!=objeto2.retornar_superficie():
+            return True
+        else:
+            return False
+
+    def __gt__(self,objeto2):
+        if self.retornar_superficie()>objeto2.retornar_superficie():
+            return True
+        else:
+            return False
+
+    def __ge__(self,objeto2):
+        if self.retornar_superficie()>=objeto2.retornar_superficie():
+            return True
+        else:
+            return False
+
+    def __lt__(self,objeto2):
+        if self.retornar_superficie()<objeto2.retornar_superficie():
+            return True
+        else:
+            return False
+
+    def __le__(self,objeto2):
+        if self.retornar_superficie()<=objeto2.retornar_superficie():
+            return True
+        else:
+            return False
+        
+
+# bloque principal
+
+rectangulo1=Rectangulo(10,10)
+rectangulo2=Rectangulo(5,20)
+if rectangulo1==rectangulo2:
+    print("Los rectangulos tienen la misma superficie")
+else:
+    print("Los rectangulos no tienen la misma superficie")
 ```
