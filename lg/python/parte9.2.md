@@ -1,1 +1,1 @@
-# tkinter y modulo ttk
+# tkinter y ttk (parte1)
