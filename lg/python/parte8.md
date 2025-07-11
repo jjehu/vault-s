@@ -24,17 +24,33 @@ Si lo ejecutamos al programa podemos comprobar que nuestra aplicación no se eje
 
 > [!CAUTION]
 > Para instalar un paquete:
-> ```pip install [nombre del paquete]```
+> ```python
+> pip install [nombre del paquete]
+> ```
 > Para desinstalar un paquete
-> ```pip uninstall [nombre del paquete]```
+> ```python
+> pip uninstall [nombre del paquete]
+> ```
 > Para conocer todos los archivos que tiene un paquete instalado:
-> ```pip show --files [nombre del paquete]```
-> ```pip show -f [nombre del paquete]```
+> ```python
+> pip show --files [nombre del paquete]
+> ```
+> ```python
+> pip show -f [nombre del paquete]
+> ```
 > Para conocer todos los paquetes instalados:
-> ```pip list```
+> ```python
+> pip list
+> ```
 > Para ver los paquetes desactualizados:
-> ```pip list --outdated```
+> ```python
+> pip list --outdated
+> ```
 > Para instalar una versión antigua:
-> ```pip install [nombre del paquete]==4.0.2```
+> ```python
+> pip install [nombre del paquete]==4.0.2
+> ```
 > Para actualizar un paquete ya instalado:
-> ```pip install --upgrade [nombre del paquete]```
+> ```python
+> pip install --upgrade [nombre del paquete]
+> ```
