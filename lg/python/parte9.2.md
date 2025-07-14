@@ -90,6 +90,7 @@ Checkbutton:
 
 ## ttk: Control Combobox
 ![Combobox](recursos/combobox.png)
+
 El control Combobox del paquete ttk permite seleccionar un string de un conjunto de items que se despliegan.
 
 > [!NOTE]
@@ -132,6 +133,7 @@ aplicacion1=Aplicacion()
 Para implementar los típicos menú de barra horizontales que aparecen en las aplicaciones cuando utilizamos la librería Tk necesitamos crear objetos de la clase Menu que se encuentra declarada en el paquete tkinter y no en el paquete tkinter.ttk.
 
 ejemplo 1:
+
 ![Menu](recursos/menu.jpg)
 
 ```python
@@ -192,6 +194,7 @@ aplicacion1=Aplicacion()
 ```
 
 ejemplo 2:
+
 ![Menu1](recursos/menu1.jpg)
 
 ![Menu2](recursos/menu2.jpg)
@@ -360,6 +363,7 @@ aplicacion1=Aplicacion()
 En la librería GUI tkinter disponemos de tres Layout Manager para disponer controles dentro de una ventana:
 
 - Pack
+
 ![Pack](recursos/pack.jpg)
 
 ```python
@@ -387,7 +391,14 @@ class Aplicacion:
 
 aplicacion1=Aplicacion()
 ```
+El parámetro side puede recibir alguno de estos cuatro valores:
+tk.TOP
+tk.LEFT
+tk.RIGHT
+tk.BOTTOM
+
 - Grid
+
 ![Grid](recursos/grid.jpg)
 
 ```python
@@ -416,6 +427,9 @@ class Aplicacion:
 aplicacion1=Aplicacion()
 ```
 - Place
+
+Este tipo de Layout Manager nos permite disponer un Widget en una posición y con un tamaño con valor absoluto a nivel de píxeles. Hay que tener cuidado en que casos utilizar este tipo de administrador de diseños ya que si agrandamos o reducimos el tamaño de la ventana puede ser que los controles queden fuera de la ventana y el operador no pueda visualizarlos.
+
 ![Place](recursos/place.jpg)
 
 ```python
