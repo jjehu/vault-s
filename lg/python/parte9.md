@@ -31,3 +31,8 @@ Lo primero que hay que tener en cuenta es que el módulo 'tkinter' (tk interface
 > - tkinter: Control Canvas
 
 [Canvas](parte9.4.md)
+> - Captura de eventos del mouse
+> - Borrar figuras mediante Ids y Tags
+> - Desplazar una figura mediante el método move
+> - Mostrar una imagen
+> - Mover una figura
