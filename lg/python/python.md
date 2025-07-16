@@ -49,5 +49,4 @@ comentadas
 > - [Tkinter y Canvas](parte9.md)
 > - [Archivos](parte10.md)
 > - [Exepciones](parte11.md)
-> - [fstrings](parte12.md)
-> - [Recursividad](parte13.md)
+> - [Recursividad](parte12.md)
