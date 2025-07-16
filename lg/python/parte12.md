@@ -102,3 +102,16 @@ Este ejemplo muestra cómo ordenar una lista usando recursividad (implementació
 > [!TIP]
 > Condición base: Asegúrate de que siempre haya una condición que termine la recursión; de lo contrario, el programa se bloqueará.
 > Evitar recursiones profundas: Si un algoritmo puede ser resuelto con un bucle, es preferible usar un enfoque iterativo en lugar de recursivo, ya que consume menos memoria.
+
+
+Ventajas:
+
+Simplicidad: Los problemas que pueden dividirse en subproblemas más pequeños suelen ser más fáciles de resolver con recursividad, ya que evita la complejidad de usar estructuras repetitivas como while o for.
+
+Elegante: El código recursivo suele ser más conciso y elegante en muchos casos, especialmente en problemas como el cálculo de factoriales, Fibonacci, y en el recorrido de estructuras como árboles y gráficos.
+
+Desventajas:
+
+Consumo de memoria: Cada llamada recursiva ocupa espacio en la pila de ejecución, lo que puede llevar al agotamiento de la memoria si la recursión es demasiado profunda o no tiene una condición de salida adecuada.
+
+Rendimiento: Las funciones recursivas suelen ser más lentas que las iterativas, ya que tienen un sobrecosto en el manejo de la pila y las llamadas a funciones.
