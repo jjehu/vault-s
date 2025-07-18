@@ -20,12 +20,22 @@ title = driver.title
 assert title == 'Google'
 ```
 
+**Tiempo de pausa**
+```python
+driver.implicitly_wait(0.5)
+```
 
+**buscar elementos**
 ```python
+googlebuscar_selenium = driver.find_element(by=By.NAME, value='q') # en este caso buscamos por nombre
+presionarbusqueda_google = driver.find_element(by=By.NAME, value='btnK')
 ```
+
+**Ingresar datos y hacer click**
 ```python
-```
-```python
+# Para los anteriores elementos de google
+googlebuscar_selenium.send_keys('Selenium')  # se ingresa la palabra Selenium
+presionarbusqueda_google.click()  # se realiza un click sobre el boton de busqueda
 ```
 ```python
 ```
