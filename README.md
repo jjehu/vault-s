@@ -15,3 +15,5 @@
 > db en postgresql [link](t1/db.md)
 
 ### Git [(guia)](t1/git.md) 
+
+### [Python](lg/python/python.md) 
