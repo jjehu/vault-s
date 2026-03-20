@@ -14,7 +14,7 @@
 > 
 > db en postgresql [link](t1/db.md)
 
-### Angular [(guia)](kotlin/kotlin.md)
+### Kotlin [(guia)](kotlin/kotlin.md)
 
 ### Git [(guia)](t1/git.md) 
 
