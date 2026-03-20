@@ -14,7 +14,7 @@
 > 
 > db en postgresql [link](t1/db.md)
 
-### Kotlin [(guia)](kotlin/kotlin.md)
+### [Kotlin](lg/kotlin/kotlin.md)
 
 ### Git [(guia)](t1/git.md) 
 
