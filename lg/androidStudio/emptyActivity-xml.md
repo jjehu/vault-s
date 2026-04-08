@@ -8,3 +8,4 @@ activity_main.xml
 MainActivity.kl
 AndroidManifest.xml
 ```
+- [Controles](parte1.md)
