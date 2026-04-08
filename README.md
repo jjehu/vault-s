@@ -16,6 +16,8 @@
 
 ### [Kotlin](lg/kotlin/kotlin.md)
 
+### [Android Studio](lg/androidStudio/androidStudio.md)
+
 ### Git [(guia)](t1/git.md) 
 
 ### [Python](lg/python/python.md) 
