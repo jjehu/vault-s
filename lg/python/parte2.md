@@ -41,6 +41,7 @@ print(len(nombre)) #len nos devuelve la cantidad de caracteres que tiene la cade
 - lower() : devuelve una cadena de caracteres convertida todos sus caracteres a minúsculas.
 - capitalize() : devuelve una cadena de caracteres convertida a mayúscula solo su primer caracter y todos los demás a minúsculas.
 
+---
 
 - capitalize() → Convierte el primer carácter a mayúscula
 - casefold() → Convierte la cadena a minúsculas (más agresivo que lower)
