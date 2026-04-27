@@ -1,5 +1,12 @@
 # SQL lite
 Android incluye SQLite de forma nativa. Para usarlo, se extiende la clase `SQLiteOpenHelper`, que gestiona la creación y actualización de la base de datos.
+
+> [!NOTE]
+> Se necesita tres piezas para poder utilizarlo:
+> - Contrato (nombres de tabla y columnas)
+> - DatabaseHelper (crea/abre la BD)
+> - Repositorio (operaciones CRUD)
+
 ```xml
 ```
 ```kt
