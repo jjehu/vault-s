@@ -180,7 +180,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context,
 ```
 
 ejemplo: 
+
 ![ejemplo1](image1.png)
+
 activity_main.xml
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
