@@ -15,7 +15,7 @@ Android incluye SQLite de forma nativa. Para usarlo, se extiende la clase `SQLit
 ```
 
 ejemplo: 
-
+![ejemplo1](image1.png)
 activity_main.xml
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
