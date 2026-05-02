@@ -31,6 +31,11 @@ Llamamos posteriormente al método startActivity pasando el objeto de la clase I
             val intento1 = Intent(this, AcercaDe::class.java)
             startActivity(intento1)
 
+> ![NOT]
+> `AcercaDe` es el nombre de la clase con el que se creo el empty activity
+> ```kt
+> val intento1 = Intent(this, AcercaDe::class.java)
+> ```
 AcercaDe boton salir:
 ```kt
 val botonsalir =findViewById<Button>(R.id.botonsalir)
