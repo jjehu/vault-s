@@ -10,3 +10,5 @@ AndroidManifest.xml
 ```
 - [Controles](emptyActivity/parte1.md)
 - [SQL lite](emptyActivity/parte2.md)
+- [Segundo Activity](emptyActivity/parte3.md)
+- [Almacenamiento](emptyActivity/parte4.md)
