@@ -45,6 +45,7 @@ val botonsalir =findViewById<Button>(R.id.botonsalir)
 ```
 
 # Segundo "Activity" con parámetros
+**Primer Empty Activity con parametros**
 ```kt
 val et1=findViewById<EditText>(R.id.et1)
 val boton1=findViewById<Button>(R.id.boton1)
@@ -56,7 +57,7 @@ boton1.setOnClickListener {
 ```
 > Como podemos ver la diferencia con el concepto anterior es que llamamos al método putExtra de la clase Intent. Tiene dos parámetros de tipo String, en el primero indicamos el nombre del dato y en el segundo el valor del dato.
 
-**Segundo Empty Activity**
+**Segundo Empty Activity con parametros**
 ```kt
 val bundle = intent.extras
 val dato = bundle?.getString("direccion")
