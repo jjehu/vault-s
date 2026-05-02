@@ -184,7 +184,34 @@ val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, opciones)
 
 spinner.adapter = adapter
 ```
-## ListView
+---
+**ejemplo:**
+```kt
+val spinner=findViewById<Spinner>(R.id.spinner)
+val lista = arrayOf("sumar", "restar", "multiplicar", "dividir")
+val adaptador1 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista)
+spinner.adapter = adaptador1
+
+button.setOnClickListener {
+            when (spinner.selectedItem.toString()) {
+                "sumar" -> tv1.text = "Resultado: ${et1.text.toString().toInt() + et2.text.toString().toInt()}"
+                "restar" -> tv1.text = "Resultado: ${et1.text.toString().toInt() - et2.text.toString().toInt()}"
+                "multiplicar" -> tv1.text = "Resultado: ${et1.text.toString().toInt() * et2.text.toString().toInt()}"
+                "dividir" -> tv1.text = "Resultado: ${et1.text.toString().toInt() / et2.text.toString().toInt()}"
+            }
+}
+```
+> [!NOTE]
+> - **1linea** - ubicamos el spinner por id
+> - **2linea** - definimos un vector con la lista de String que mostrará el Spinner
+> - **3linea** - definimos y creamos un objeto de la clase ArrayAdapter. Al constructor le pasamos como primer parámetro la referencia de nuestro MainActivity (this), el segundo parámetro indica el tipo de Spinner, pudiendo ser las constantes
+> `android.R.layout.simple_spinner_item`
+> `android.R.layout.simple_spinner_dropdown_item`
+> - El tercer parámetro es la referencia del vector que se mostrará.
+> - **4linea** - le asignamos a la propiedad adapter del Spinner el objeto de la clase ArrayAdapter que acabamos de crear
+> - **6linea...** - en la lambda registrada para el botón verificamos que item se encuentra seleccionada en el Spinner y procedemos a efectuar la operación respectiva
+
+## ListView (con un lista de String)
 Permite mostrar listas de elementos:
 ```xml
 <ListView
@@ -201,6 +228,25 @@ val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, datos)
 
 lista.adapter = adapter
 ```
+---
+**ejemplo:**
+```kt
+val list1=findViewById<ListView>(R.id.list1)
+val paises = arrayOf( "Argentina", "Chile", "Paraguay", "Bolivia", "Peru", "Ecuador", "Brasil", "Colombia", "Venezuela", "Uruguay")
+var habitantes = arrayOf(40_000_000, 17_000_000, 6_500_000, 10_000_000, 30_000_000, 14_000_000, 183_000_000, 44_000_000, 31_000_000, 3_500_000)
+val adaptador1 = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, paises)
+list1.adapter = adaptador1
+list1.setOnItemClickListener { adapterView, view, i, l ->
+tv1.text = "Población de: ${habitantes[i]}"
+}
+```
+> [!NOTE]
+> **1linea** - ubicamos la lista mediante el id
+> **2-3linea** - definimos dos arreglos paralelos donde almacenamos en uno los nombres de países y en el otro almacenamos la cantidad de habitantes de dichos países
+> **4-5linea** - creamos un objeto de la clase ArrayAdapter de forma similar a como lo hicimos cuando vimos la clase Spinner y lo enlazamos con el ListView
+> **6linea** - llamamos al método setOnItemClicListener de la clase ListView y le pasamos como parámetro una lambda que se ejecutará cada vez que el usuario seleccione un item del ListView
+
+
 ## ImageButton
 Botón con imagen:
 ```xml
@@ -218,3 +264,16 @@ imgBtn.setOnClickListener {
     mensaje.text = "Imagen presionada"
 }
 ```
+> [!TIP]
+> imagen en formato jpg de 50 por 50 píxeles
+> MyAplication/app/src/main/res/mipmap-mdpi
+> En la ventana "Project" cambiamos a vista "Project Files" y navegamos hasta la carpeta donde copiamos el archivo
+
+> [!NOTE]
+> hay otras carpetas con nombres similares donde se puede guardar el archivo:
+> mipmap-mdpi - (guardamos la imagen con el tamaño original)
+> mipmap-hdpi - (guardamos la imagen con el tamaño del 150% con respecto al de la carpeta mipmap-mdpi)
+> mipmap-xhdpi - (guardamos la imagen con el tamaño del 200% con respecto al de la carpeta mipmap-mdpi)
+> mipmap-xxhdpi - (guardamos la imagen con el tamaño del 300% con respecto al de la carpeta mipmap-mdpi)
+> mipmap-xxxhdpi - (guardamos la imagen con el tamaño del 400% con respecto al de la carpeta mipmap-mdpi)
+> mipmap-anydpi-v26
