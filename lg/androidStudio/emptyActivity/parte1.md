@@ -241,10 +241,10 @@ tv1.text = "Población de: ${habitantes[i]}"
 }
 ```
 > [!NOTE]
-> **1linea** - ubicamos la lista mediante el id
-> **2-3linea** - definimos dos arreglos paralelos donde almacenamos en uno los nombres de países y en el otro almacenamos la cantidad de habitantes de dichos países
-> **4-5linea** - creamos un objeto de la clase ArrayAdapter de forma similar a como lo hicimos cuando vimos la clase Spinner y lo enlazamos con el ListView
-> **6linea** - llamamos al método setOnItemClicListener de la clase ListView y le pasamos como parámetro una lambda que se ejecutará cada vez que el usuario seleccione un item del ListView
+> - **1linea** - ubicamos la lista mediante el id
+> - **2-3linea** - definimos dos arreglos paralelos donde almacenamos en uno los nombres de países y en el otro almacenamos la cantidad de habitantes de dichos países
+> - **4-5linea** - creamos un objeto de la clase ArrayAdapter de forma similar a como lo hicimos cuando vimos la clase Spinner y lo enlazamos con el ListView
+> - **6linea** - llamamos al método setOnItemClicListener de la clase ListView y le pasamos como parámetro una lambda que se ejecutará cada vez que el usuario seleccione un item del ListView
 
 
 ## ImageButton
@@ -265,15 +265,15 @@ imgBtn.setOnClickListener {
 }
 ```
 > [!TIP]
-> imagen en formato jpg de 50 por 50 píxeles
-> MyAplication/app/src/main/res/mipmap-mdpi
-> En la ventana "Project" cambiamos a vista "Project Files" y navegamos hasta la carpeta donde copiamos el archivo
+> - imagen en formato jpg de 50 por 50 píxeles
+> - MyAplication/app/src/main/res/mipmap-mdpi
+> - En la ventana "Project" cambiamos a vista "Project Files" y navegamos hasta la carpeta donde copiamos el archivo
 
 > [!NOTE]
-> hay otras carpetas con nombres similares donde se puede guardar el archivo:
-> mipmap-mdpi - (guardamos la imagen con el tamaño original)
-> mipmap-hdpi - (guardamos la imagen con el tamaño del 150% con respecto al de la carpeta mipmap-mdpi)
-> mipmap-xhdpi - (guardamos la imagen con el tamaño del 200% con respecto al de la carpeta mipmap-mdpi)
-> mipmap-xxhdpi - (guardamos la imagen con el tamaño del 300% con respecto al de la carpeta mipmap-mdpi)
-> mipmap-xxxhdpi - (guardamos la imagen con el tamaño del 400% con respecto al de la carpeta mipmap-mdpi)
-> mipmap-anydpi-v26
+> - hay otras carpetas con nombres similares donde se puede guardar el archivo:
+> - mipmap-mdpi - (guardamos la imagen con el tamaño original)
+> - mipmap-hdpi - (guardamos la imagen con el tamaño del 150% con respecto al de la carpeta mipmap-mdpi)
+> - mipmap-xhdpi - (guardamos la imagen con el tamaño del 200% con respecto al de la carpeta mipmap-mdpi)
+> - mipmap-xxhdpi - (guardamos la imagen con el tamaño del 300% con respecto al de la carpeta mipmap-mdpi)
+> - mipmap-xxxhdpi - (guardamos la imagen con el tamaño del 400% con respecto al de la carpeta mipmap-mdpi)
+> - mipmap-anydpi-v26
