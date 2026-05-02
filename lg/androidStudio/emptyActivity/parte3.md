@@ -31,7 +31,7 @@ Llamamos posteriormente al método startActivity pasando el objeto de la clase I
             val intento1 = Intent(this, AcercaDe::class.java)
             startActivity(intento1)
 
-> ![NOT]
+> [!NOTE]
 > `AcercaDe` es el nombre de la clase con el que se creo el empty activity
 > ```kt
 > val intento1 = Intent(this, AcercaDe::class.java)
@@ -45,3 +45,40 @@ val botonsalir =findViewById<Button>(R.id.botonsalir)
 ```
 
 # Segundo "Activity" con parámetros
+```kt
+val et1=findViewById<EditText>(R.id.et1)
+val boton1=findViewById<Button>(R.id.boton1)
+boton1.setOnClickListener {
+        val intento1 = Intent(this, Actividad2::class.java)
+        intento1.putExtra("direccion", et1.text.toString())
+        startActivity(intento1)
+}
+```
+> Como podemos ver la diferencia con el concepto anterior es que llamamos al método putExtra de la clase Intent. Tiene dos parámetros de tipo String, en el primero indicamos el nombre del dato y en el segundo el valor del dato.
+
+**Segundo Empty Activity**
+```kt
+val bundle = intent.extras
+val dato = bundle?.getString("direccion")
+val webView1=findViewById<WebView>(R.id.webView1)
+val boton1=findViewById<Button>(R.id.button)
+webView1.loadUrl("https://${dato}")
+boton1.setOnClickListener {
+finish();
+}
+```
+
+> En esta clase definimos una variable de tipo Bundle y la inicializamos con el valor de la propiedad extras de la propiedad intent del Activity (esto lo hacemos para recuperar el o los parámetros que envió la otra actividad (Activity)).
+> ```kt
+> val bundle = intent.extras
+> val dato = bundle?.getString("direccion")
+> webView1.loadUrl("https://${dato}")
+> ```
+> El método loadUrl de la clase WebView permite visualizar el contenido de un sitio web.
+
+> [!IMPORTANT]
+> Como nuestra aplicación debe acceder a internet debemos hacer una configuración en el archivo "AndroidManifest.xml", podemos ubicar este archivo en `app\src\main\AndroidManifest.xml`.
+> Agregamos el permiso tipeando lo siguiente en este archivo:
+> ```xml
+> <uses-permission android:name="android.permission.INTERNET" />
+> ```
