@@ -236,398 +236,207 @@ Para trabajar con SQLite, primero necesitas una clase que gestione la creación 
 *   **`onCreate`**: Se ejecuta una sola vez para crear las tablas.
 *   **`onUpgrade`**: Se usa si decides cambiar la estructura de la tabla más adelante.
 
+# 🗄️ 2. Crear la base de datos (SQLiteOpenHelper)
+
+Creamos una clase que gestione la base de datos.
+
+📄 `DatabaseHelper.kt`
+
 ```kotlin
-class AdminSQLiteOpenHelper(context: Context, name: String, factory: CursorFactory?, version: Int) 
-    : SQLiteOpenHelper(context, name, factory, version) {
-
-    override fun onCreate(db: SQLiteDatabase) {
-        // Creamos la tabla con sus campos
-        db.execSQL("create table articulos(codigo int primary key, descripcion text, precio real)")
-    }
-
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) { }
-}
-```
-
----
-
-## 2. Operaciones CRUD (Crear, Leer, Actualizar, Borrar)
-
-Para cualquier operación, primero instancia el administrador en tu `MainActivity`:
-`val admin = AdminSQLiteOpenHelper(this, "administracion", null, 1)`
-`val bd = admin.writableDatabase`
-
-
-
-### 🟢 Alta (Insertar)
-Usa la clase `ContentValues` para emparejar el nombre de la columna con el dato.
-```kotlin
-val registro = ContentValues()
-registro.put("codigo", et1.text.toString())
-registro.put("descripcion", et2.text.toString())
-registro.put("precio", et3.text.toString())
-
-bd.insert("articulos", null, registro)
-bd.close()
-```
-
-### 🔍 Consulta (Seleccionar)
-Para leer, usamos `rawQuery`, que devuelve un objeto **`Cursor`**. El cursor apunta a las filas resultantes.
-```kotlin
-val fila = bd.rawQuery("select descripcion, precio from articulos where codigo=${et1.text.toString()}", null)
-
-if (fila.moveToFirst()) { // Si encontró algo
-    et2.setText(fila.getString(0)) // Columna descripcion
-    et3.setText(fila.getString(1)) // Columna precio
-} else {
-    Toast.makeText(this, "No existe", Toast.LENGTH_SHORT).show()
-}
-bd.close()
-```
-
-### 🔴 Baja (Borrar)
-El método `delete` devuelve un entero con la cantidad de filas borradas.
-```kotlin
-val cant = bd.delete("articulos", "codigo=${et1.text.toString()}", null)
-bd.close()
-if (cant == 1) Toast.makeText(this, "Borrado", Toast.LENGTH_SHORT).show()
-```
-
-### 🟡 Modificación (Actualizar)
-Similar al alta, usas `ContentValues` para los nuevos datos y aplicas `update`.
-```kotlin
-val registro = ContentValues()
-registro.put("descripcion", et2.text.toString())
-registro.put("precio", et3.text.toString())
-
-val cant = bd.update("articulos", registro, "codigo=${et1.text.toString()}", null)
-bd.close()
-```
-
----
-
-> [!TIP]
-> Tips rápidos de SQLite
-> *   **Tipos de datos:** `int` (entero), `text` (cadena), `real` (decimal).
-> *   **Comillas:** En las consultas SQL, los valores de texto deben ir entre comillas simples (ej: `descripcion='${et2.text}'`), pero los números no.
-> *   **Cerrar la base:** Siempre llama a `bd.close()` al terminar una operación para liberar memoria.
-> *   **Primary Key:** El campo `codigo` es la llave primaria, lo que significa que no pueden existir dos artículos con el mismo código.
-
-# SQlite
-## Clase DBHelper
-Normalmente se crea una nueva clase para gestionar la base de datos `DBHelper.kt`
-
-```kt
-package com.example.miapp
-
-import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DBHelper(context: Context) : SQLiteOpenHelper(
-    context,
-    "conversiones.db",
-    null,
-    1
-) {
+// Clase que hereda de SQLiteOpenHelper para manejar la base de datos
+class DatabaseHelper(context: Context) :
+    SQLiteOpenHelper(context, "mi_base.db", null, 1) {
 
+    // Se ejecuta SOLO cuando la base de datos se crea por primera vez
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL(
-            "CREATE TABLE historial (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "tipo TEXT," +
-                    "resultado TEXT" +
-                    ")"
-        )
+        // SQL para crear una tabla
+        val createTable = """
+            CREATE TABLE usuarios (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre TEXT,
+                edad INTEGER
+            )
+        """.trimIndent()
+
+        db.execSQL(createTable) 
+        // Ejecuta la sentencia SQL en la base de datos
     }
 
+    // Se ejecuta cuando cambias la versión de la DB (version = 1 → 2, etc.)
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS historial")
+        db.execSQL("DROP TABLE IF EXISTS usuarios")
+        // Borra la tabla si existe
+
         onCreate(db)
-    }
-
-    fun insertar(tipo: String, resultado: String) {
-        val db = writableDatabase
-        val values = ContentValues()
-        values.put("tipo", tipo)
-        values.put("resultado", resultado)
-        db.insert("historial", null, values)
-        db.close()
-    }
-
-    fun obtenerTodo(): List<String> {
-        val lista = mutableListOf<String>()
-        val db = readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM historial", null)
-
-        if (cursor.moveToFirst()) {
-            do {
-                val tipo = cursor.getString(1)
-                val resultado = cursor.getString(2)
-                lista.add("$tipo :: $resultado")
-            } while (cursor.moveToNext())
-        }
-
-        cursor.close()
-        db.close()
-        return lista
-    }
-
-    fun borrarTodo() {
-        val db = writableDatabase
-        db.execSQL("DELETE FROM historial")
-        db.close()
-    }
-}
-```
-## Usarlo en el MainActivity
-Primeramente se crea la instancia:
-```kt
-val db = DBHelper(this)
-```
-
-### Guardar datos
-```kt
-db.insertar("Bs → USD", "${datoIngresado} Bs = %.2f USD".format(datoIngresado/6.96))
-```
-```kt
-db.insertar(
-    "USD → Bs",
-    "${datoIngresado} USD = %.2f Bs".format(datoIngresado*6.96)
-)
-```
-### Mostrar historial
-```kt
-fun cargarDatos() {
-    val textoHistorial = findViewById<TextView>(R.id.editTextTextMultiLine)
-
-    val lista = db.obtenerTodo()
-
-    val texto = StringBuilder()
-    for (item in lista) {
-        texto.append(item).append("\n")
-    }
-
-    textoHistorial.text = texto.toString()
-}
-```
-### Borrar historial
-```kt
-fun borrarHistorial() {
-    db.borrarTodo()
-    cargarDatos()
-    Toast.makeText(this, "Historial eliminado", Toast.LENGTH_SHORT).show()
-}
-```
-
-# Room (Jetpack)
-Aprender **Room** es el siguiente paso correcto. Es básicamente SQLite pero bien organizado, seguro y mucho más fácil de mantener.
-
----
-
-# 🧱 1. Agregar dependencias (MUY IMPORTANTE)
-
-En tu `build.gradle (Module: app)`:
-
-```kotlin id="2m5m8r"
-dependencies {
-    implementation("androidx.room:room-runtime:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
-
-    // Opcional pero recomendado (coroutines)
-    implementation("androidx.room:room-ktx:2.6.1")
-}
-```
-
-Y activa kapt arriba:
-
-```kotlin id="6q4m2y"
-plugins {
-    id("kotlin-kapt")
-}
-```
-
----
-
-# 🧩 2. Crear la entidad (tabla)
-
-Archivo: `Conversion.kt`
-
-```kotlin id="k2c6x1"
-package com.example.miapp
-
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-
-@Entity(tableName = "historial")
-data class Conversion(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val tipo: String,
-    val resultado: String
-)
-```
-
----
-
-# 🧠 3. Crear el DAO (consultas)
-
-Archivo: `ConversionDao.kt`
-
-```kotlin id="9x7c4p"
-package com.example.miapp
-
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-
-@Dao
-interface ConversionDao {
-
-    @Insert
-    suspend fun insertar(conversion: Conversion)
-
-    @Query("SELECT * FROM historial ORDER BY id DESC")
-    suspend fun obtenerTodo(): List<Conversion>
-
-    @Query("DELETE FROM historial")
-    suspend fun borrarTodo()
-}
-```
-
----
-
-# 🏗️ 4. Crear la base de datos
-
-Archivo: `AppDatabase.kt`
-
-```kotlin id="7z3m5n"
-package com.example.miapp
-
-import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-
-@Database(entities = [Conversion::class], version = 1)
-abstract class AppDatabase : RoomDatabase() {
-
-    abstract fun conversionDao(): ConversionDao
-
-    companion object {
-        @Volatile
-        private var INSTANCE: AppDatabase? = null
-
-        fun getDatabase(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    AppDatabase::class.java,
-                    "conversiones_db"
-                ).build()
-                INSTANCE = instance
-                instance
-            }
-        }
+        // Vuelve a crear la base de datos
     }
 }
 ```
 
 ---
 
-# ⚙️ 5. Usarlo en tu MainActivity
+# 🧠 3. Operaciones CRUD (Crear, Leer, etc.)
 
-Primero:
-
-```kotlin id="8n2v3l"
-val db = AppDatabase.getDatabase(this)
-val dao = db.conversionDao()
-```
-
----
-
-## 📥 Guardar datos (IMPORTANTE: usar coroutines)
-
-```kotlin id="5b9x2w"
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-
-CoroutineScope(Dispatchers.IO).launch {
-    dao.insertar(
-        Conversion(
-            tipo = "Bs → USD",
-            resultado = "${datoIngresado} Bs = %.2f USD".format(datoIngresado/6.96)
-        )
-    )
-}
-```
-
----
-
-## 📤 Mostrar historial
-
-```kotlin id="4v8p1q"
-fun cargarDatos() {
-    val textoHistorial = findViewById<TextView>(R.id.editTextTextMultiLine)
-
-    CoroutineScope(Dispatchers.IO).launch {
-        val lista = dao.obtenerTodo()
-
-        val texto = StringBuilder()
-        for (item in lista) {
-            texto.append("${item.tipo} :: ${item.resultado}\n")
-        }
-
-        runOnUiThread {
-            textoHistorial.text = texto.toString()
-        }
-    }
-}
-```
-
----
-
-## 🗑️ Borrar historial
-
-```kotlin id="1t6n3k"
-CoroutineScope(Dispatchers.IO).launch {
-    dao.borrarTodo()
-    runOnUiThread {
-        cargarDatos()
-    }
-}
-```
-
----
-
-# 🧠 Cosas CLAVE que debes entender
-
-* `@Entity` = tabla
-* `@Dao` = consultas SQL
-* `RoomDatabase` = conexión
-* `suspend` = no bloquear la app
-* `Dispatchers.IO` = hilo para base de datos
-
----
-
-# ⚠️ Error común (muy importante)
-
-Si haces esto sin coroutines:
+Agregamos funciones dentro de la misma clase:
 
 ```kotlin
-dao.insertar(...)
-```
+import android.content.ContentValues
 
-👉 la app se va a crashear (Room no permite DB en el hilo principal).
+// Insertar un usuario
+fun insertarUsuario(nombre: String, edad: Int): Long {
+    val db = writableDatabase 
+    // Abre la base de datos en modo escritura
+
+    val values = ContentValues()
+    // Estructura tipo mapa clave-valor
+
+    values.put("nombre", nombre)
+    // Inserta el nombre
+
+    values.put("edad", edad)
+    // Inserta la edad
+
+    return db.insert("usuarios", null, values)
+    // Inserta en la tabla y devuelve el ID generado
+}
+```
 
 ---
 
-# 🚀 Siguiente nivel (te recomiendo)
+```kotlin
+// Obtener todos los usuarios
+fun obtenerUsuarios(): List<String> {
+    val lista = mutableListOf<String>()
 
-Cuando domines esto, el camino profesional es:
+    val db = readableDatabase
+    // Abre la base de datos en modo lectura
 
-* ✅ usar **LiveData o Flow**
-* ✅ usar **RecyclerView** (no TextView)
-* ✅ arquitectura **MVVM**
+    val cursor = db.rawQuery("SELECT * FROM usuarios", null)
+    // Ejecuta consulta SQL
+
+    if (cursor.moveToFirst()) {
+        do {
+            val nombre = cursor.getString(1)
+            // Columna 1 = nombre
+
+            val edad = cursor.getInt(2)
+            // Columna 2 = edad
+
+            lista.add("$nombre - $edad")
+            // Agrega al listado
+        } while (cursor.moveToNext())
+    }
+
+    cursor.close()
+    // Cierra el cursor para evitar fugas de memoria
+
+    return lista
+}
+```
+
+---
+
+# 📱 4. Usar la base de datos en la Activity
+
+📄 `MainActivity.kt`
+
+```kotlin
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var dbHelper: DatabaseHelper
+    // Variable que contendrá la base de datos
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        dbHelper = DatabaseHelper(this)
+        // Inicializa la base de datos
+
+        val btnInsertar = findViewById<Button>(R.id.btnInsertar)
+        val btnMostrar = findViewById<Button>(R.id.btnMostrar)
+        val txtResultado = findViewById<TextView>(R.id.txtResultado)
+
+        btnInsertar.setOnClickListener {
+            dbHelper.insertarUsuario("Juan", 25)
+            // Inserta un usuario de prueba
+        }
+
+        btnMostrar.setOnClickListener {
+            val usuarios = dbHelper.obtenerUsuarios()
+            // Obtiene la lista de usuarios
+
+            txtResultado.text = usuarios.joinToString("\n")
+            // Muestra los usuarios en pantalla
+        }
+    }
+}
+```
+
+---
+
+# 🧾 5. Layout básico
+
+📄 `activity_main.xml`
+
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btnInsertar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Insertar usuario"/>
+
+    <Button
+        android:id="@+id/btnMostrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mostrar usuarios"/>
+
+    <TextView
+        android:id="@+id/txtResultado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Resultados"/>
+</LinearLayout>
+```
+
+---
+
+# 🧩 Conceptos clave (muy importante)
+
+* **SQLite**: base de datos local dentro del dispositivo
+* **SQLiteOpenHelper**: clase que gestiona creación y versión
+* **Cursor**: resultado de una consulta
+* **ContentValues**: estructura para insertar datos
+* **writableDatabase / readableDatabase**: modos de acceso
+
+---
+
+# 🚀 Siguientes pasos (si quieres avanzar)
+
+Una vez domines esto, te recomiendo aprender:
+
+* Uso de **Room (recomendado por Google)** en lugar de SQLite directo
+* RecyclerView para mostrar datos
+* Arquitectura MVVM
+
+---
+
+Si quieres, puedo:
+👉 convertir este ejemplo a **Room (mucho más profesional)**
+👉 o ayudarte a hacer un CRUD completo con editar y eliminar 👌
