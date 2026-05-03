@@ -4,7 +4,7 @@
 > - Mediante archivos de Texto.
 > - En una base de datos con acceso a SQL.
 
-## Almacenamiento de datos mediante la clase SharedPreferences
+# Almacenamiento de datos mediante la clase SharedPreferences
 ```kt
 val num1=findViewById<EditText>(R.id.numero1)
 val num2=findViewById<EditText>(R.id.numero2)
@@ -79,17 +79,9 @@ botonGuardar.setOnClickListener {
 > val alt = preferencias.getFloat("altura", 0f)
 > ```
 
-## Almacenamiento de datos en un archivo de texto en la memoria interna
-```kt
-```
-Esta es una guía optimizada y simplificada para manejar archivos de texto en la memoria interna de Android usando **Kotlin**.
-
----
-
+# Almacenamiento de datos en un archivo de texto en la memoria interna
 ## 📂 Almacenamiento en Memoria Interna
 La memoria interna es un espacio privado de tu aplicación. Ninguna otra app puede acceder a estos archivos y se borran si el usuario desinstala la aplicación.
-
-
 
 ### 1. Escribir datos (Grabar)
 Para guardar información, se utiliza la clase `OutputStreamWriter`.
@@ -132,8 +124,6 @@ if (fileList().contains("notas.txt")) {
 }
 ```
 
----
-
 ## 🛠️ Casos Prácticos
 
 ### Proyecto A: Bloc de Notas Simple
@@ -160,7 +150,7 @@ Esta es una guía resumida y directa para manejar archivos en el almacenamiento 
 
 ---
 
-## 💾 Almacenamiento en Tarjeta SD
+# 💾 Almacenamiento en Tarjeta SD
 A diferencia de la memoria interna, el almacenamiento externo permite guardar archivos con mayor capacidad y facilita compartirlos. Sin embargo, requiere permisos específicos y no todos los dispositivos cuentan con ella.
 
 ### 1. Configuración de Permisos
@@ -236,10 +226,9 @@ Si el emulador por defecto (como el Pixel 3) no soporta tarjeta SD, el programa 
 *   **`getExternalFilesDir(null)`**: Obtiene la ruta de la SD vinculada a tu app.
 *   **`File(ruta, nombre)`**: Une la carpeta y el nombre del archivo.
 *   **`try-catch`**: Imprescindible para evitar cierres inesperados si la SD no está disponible.
-## Almacenamiento en una base de datos SQLite
-```kt
-```
-Esta es una guía práctica y simplificada para dominar **SQLite** en Android con Kotlin. SQLite es la base de datos nativa para almacenar datos estructurados de forma persistente.
+
+# Almacenamiento en una base de datos SQLite
+SQLite es la base de datos nativa para almacenar datos estructurados de forma persistente.
 
 ---
 
