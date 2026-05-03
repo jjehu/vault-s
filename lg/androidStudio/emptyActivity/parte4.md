@@ -228,15 +228,13 @@ Si el emulador por defecto (como el Pixel 3) no soporta tarjeta SD, el programa 
 # Almacenamiento en una base de datos SQLite
 SQLite es la base de datos nativa para almacenar datos estructurados de forma persistente.
 
----
-
 ## 1. La Clase Administradora (`SQLiteOpenHelper`)
 Para trabajar con SQLite, primero necesitas una clase que gestione la creación y actualización de la base de datos.
 
 *   **`onCreate`**: Se ejecuta una sola vez para crear las tablas.
 *   **`onUpgrade`**: Se usa si decides cambiar la estructura de la tabla más adelante.
 
-# 🗄️ 2. Crear la base de datos (SQLiteOpenHelper)
+## 🗄️ 2. Crear la base de datos (SQLiteOpenHelper)
 
 Creamos una clase que gestione la base de datos.
 
@@ -279,7 +277,7 @@ class DatabaseHelper(context: Context) :
 
 ---
 
-# 🧠 3. Operaciones CRUD (Crear, Leer, etc.)
+## 🧠 3. Operaciones CRUD (Crear, Leer, etc.)
 
 Agregamos funciones dentro de la misma clase:
 
@@ -340,7 +338,7 @@ fun obtenerUsuarios(): List<String> {
 
 ---
 
-# 📱 4. Usar la base de datos en la Activity
+## 📱 4. Usar la base de datos en la Activity
 
 📄 `MainActivity.kt`
 
@@ -384,7 +382,7 @@ class MainActivity : AppCompatActivity() {
 
 ---
 
-# 🧾 5. Layout básico
+## 🧾 5. Layout básico
 
 📄 `activity_main.xml`
 
@@ -417,7 +415,7 @@ class MainActivity : AppCompatActivity() {
 
 ---
 
-# 🧩 Conceptos clave (muy importante)
+## 🧩 Conceptos clave (muy importante)
 
 * **SQLite**: base de datos local dentro del dispositivo
 * **SQLiteOpenHelper**: clase que gestiona creación y versión
@@ -427,7 +425,7 @@ class MainActivity : AppCompatActivity() {
 
 ---
 
-# 🚀 Siguientes pasos (si quieres avanzar)
+## 🚀 Siguientes pasos (si quieres avanzar)
 
 Una vez domines esto, te recomiendo aprender:
 
@@ -435,8 +433,3 @@ Una vez domines esto, te recomiendo aprender:
 * RecyclerView para mostrar datos
 * Arquitectura MVVM
 
----
-
-Si quieres, puedo:
-👉 convertir este ejemplo a **Room (mucho más profesional)**
-👉 o ayudarte a hacer un CRUD completo con editar y eliminar 👌
