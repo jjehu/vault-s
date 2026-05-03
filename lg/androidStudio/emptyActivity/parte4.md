@@ -425,6 +425,314 @@ class MainActivity : AppCompatActivity() {
 
 ---
 
+## EJEMPLO
+`activity_main.xml`
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nuevo producto"
+            android:padding="10dp"
+            android:textSize="23dp"
+            android:background="#1E0747"
+            android:textColor="@color/white"
+            android:fontFamily="casual"
+            />
+
+        <EditText
+            android:id="@+id/et1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Ingrese el código"
+            android:padding="10dp"
+            android:fontFamily="sans-serif-black"
+            android:inputType="number"
+            />
+
+        <EditText
+            android:id="@+id/et2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Ingrese el nombre"
+            android:padding="10dp"
+            android:fontFamily="sans-serif-black"
+            />
+        <EditText
+            android:id="@+id/et3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Ingrese el precio"
+            android:padding="10dp"
+            android:fontFamily="sans-serif-black"
+            android:inputType="numberDecimal"
+            />
+        <Button
+            android:id="@+id/btn_agregar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agregar"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            />
+        <Button
+            android:id="@+id/btn_consultarCodigo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Consultar por código"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            />
+        <Button
+            android:id="@+id/btn_consultarNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Consultar por nombre"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            />
+        <Button
+            android:id="@+id/btn_borrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Borrar por código"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            />
+        <Button
+            android:id="@+id/btn_modificar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modificar"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            />
+        <ListView
+            android:id="@+id/lista_presentada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+`DBHelper.kt`
+```kt
+package com.example.prueka
+
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import android.content.ContentValues
+import kotlin.text.insert
+import com.example.prueka.articulo
+
+// Clase que hereda de SQLiteOpenHelper para manejar la base de datos
+class DBHelper (context: Context): SQLiteOpenHelper(context, "mi_base.db", null, 1){
+    //Se ejecuta SOLO cuando la base de datos se crea por primera vez
+    override fun onCreate(db: SQLiteDatabase) {
+        val createTable = """
+            CREATE TABLE articulos (
+            codigo INTEGER PRIMARY KEY,
+            nombre TEXT,
+            precio DECIMAL
+            )
+            """.trimIndent()
+        // si se quiere que el codigo se genere automaticamente: id INTEGER PRIMARY KEY AUTOINCREMENT,
+        db.execSQL(createTable)
+        // Ejecuta la sentencia SQL en la base de datos
+    }
+    // Se ejecuta cuando cambias la versión de la DB (version = 1 → 2, etc.)
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("DROP TABLE IF EXISTS articulos")
+        // Borra la tabla si existe
+        onCreate(db)
+        // Vuelve a crear la base de datos
+    }
+
+    // -----CRUD-----
+    // Insertar un usuario
+    fun insertarArticulo(cod: Int, nomb: String, prec: Float): Long {
+        val db = writableDatabase // abre la base de datos en modo escritura
+        val values = ContentValues() // Estructura tipo mapa clave-valor
+        values.put("codigo", cod) // Insertar el codigo
+        values.put("nombre", nomb) // Insertar el nombre
+        values.put("precio", prec) // Insertar el precio
+
+        return db.insert("articulos", null, values)
+        // Insertar en la tabla y devuelve el codigo
+    }
+
+
+    // Obtener usuario por codigo
+    //devuelve una lista de string
+    fun obtener_porCodigo(cod: Int): List<String>{
+        val lista = mutableListOf<String>()
+        val db = readableDatabase // Abre la base de datos en modo lectura
+        val cursor = db.rawQuery("SELECT * FROM articulos WHERE codigo = ?", arrayOf(cod.toString()))
+        // Ejecuta consulta SQL
+        if (cursor.moveToFirst()){
+            do {
+                val codigo = cursor.getString(0)
+                val nombre = cursor.getString(1)
+                val precio = cursor.getString(2)
+                lista.add("$codigo - $nombre - $precio")
+            }while (cursor.moveToNext())
+        }
+        cursor.close()// Cierra el cursor para evitar fugas de memoria
+        return lista
+    }
+    //devuelve una lista de articulo (clase propia)
+    fun obtener_porNombre(nom: String): List<articulo>{
+        val lista = mutableListOf<articulo>()
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM articulos WHERE nombre = ?", arrayOf(nom))
+        if (cursor.moveToFirst()){
+            do {
+                val codigo = cursor.getInt(0)
+                val nombre = cursor.getString(1)
+                val precio = cursor.getFloat(2)
+                lista.add(articulo(codigo, nombre, precio))
+            }while (cursor.moveToNext())
+        }
+        cursor.close()
+        return lista
+    }
+    fun borrar(cod: Int): Int{
+        val db = writableDatabase
+
+        return db.delete(
+            "articulos",
+            "codigo = ?",
+            arrayOf(cod.toString())
+        )
+    }
+    fun modificar(cod: Int, nomb: String, prec: Float): Int {
+        val db = writableDatabase
+        val values = ContentValues()
+        values.put("nombre", nomb)
+        values.put("precio", prec)
+
+        return db.update("articulos",
+            values,
+            "codigo = ?",
+            arrayOf(cod.toString())
+        )
+    }
+}
+```
+`MainActivity.kt`
+```kt
+package com.example.prueka
+
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ListView
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+
+class MainActivity : AppCompatActivity() {
+
+    // Variable que contendrá la base de datos
+    lateinit var dbHelper: DBHelper
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
+
+        val in_cod = findViewById<EditText>(R.id.et1)
+        val in_nom = findViewById<EditText>(R.id.et2)
+        val in_pre = findViewById<EditText>(R.id.et3)
+        val btn_agr = findViewById<Button>(R.id.btn_agregar)
+        val btn_cod = findViewById<Button>(R.id.btn_consultarCodigo)
+        val btn_nom = findViewById<Button>(R.id.btn_consultarNombre)
+        val btn_bor = findViewById<Button>(R.id.btn_borrar)
+        val btn_mod = findViewById<Button>(R.id.btn_modificar)
+        val list_pres = findViewById<ListView>(R.id.lista_presentada)
+
+        // Inicializa la base de datos
+        dbHelper = DBHelper(this)
+
+        // Agregar
+        btn_agr.setOnClickListener {
+            val codigo = in_cod.text.toString().toIntOrNull()
+            val nombre = in_nom.text.toString()
+            val precio = in_pre.text.toString().toFloatOrNull()
+
+            if (codigo!=null && nombre.isNotEmpty() && precio!=null){
+                val res = dbHelper.insertarArticulo(codigo, nombre, precio)
+                if (res != -1L){
+                    Toast.makeText(this, "Articulo agregado a la base correctamente", Toast.LENGTH_SHORT).show()
+                    in_cod.text.clear()
+                    in_nom.text.clear()
+                    in_pre.text.clear()
+                }else
+                    Toast.makeText(this, "Error, el código ya existe", Toast.LENGTH_SHORT).show()
+            }else
+                Toast.makeText(this, "Faltan campos a completar", Toast.LENGTH_SHORT).show()
+        }
+        // Buscar por codigo
+        btn_cod.setOnClickListener {
+            val codigo = in_cod.text.toString().toIntOrNull()
+            if (codigo != null) {
+                val lista = dbHelper.obtener_porCodigo(codigo)
+                list_pres.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, lista)
+            } else Toast.makeText(this, "Ingrese un código", Toast.LENGTH_SHORT).show()
+        }
+        // Buscar por nombre
+        btn_nom.setOnClickListener {
+            val nombre = in_nom.text.toString()
+            if (nombre.isNotEmpty()) {
+                val listaArticulos = dbHelper.obtener_porNombre(nombre)
+                // Al usar la clase 'articulo' con toString(), el adaptador funciona directo
+                list_pres.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listaArticulos)
+            } else Toast.makeText(this, "Ingrese nombre", Toast.LENGTH_SHORT).show()
+        }
+        // Borrar con el codigo
+        btn_bor.setOnClickListener {
+            val codigo = in_cod.text.toString().toIntOrNull()
+            if (codigo != null) {
+                val cant = dbHelper.borrar(codigo)
+                in_cod.text.clear()
+                if (cant > 0) Toast.makeText(this, "Eliminado", Toast.LENGTH_SHORT).show()
+                else Toast.makeText(this, "No existe ese código", Toast.LENGTH_SHORT).show()
+            } else Toast.makeText(this, "Ingrese código para borrar", Toast.LENGTH_SHORT).show()
+        }
+        // Modificar
+        btn_mod.setOnClickListener {
+            val codigo = in_cod.text.toString().toIntOrNull()
+            val nombre = in_nom.text.toString()
+            val precio = in_pre.text.toString().toFloatOrNull()
+
+            if (codigo != null && nombre.isNotEmpty() && precio != null) {
+                val cant = dbHelper.modificar(codigo, nombre, precio)
+                if (cant > 0) Toast.makeText(this, "Modificado con éxito", Toast.LENGTH_SHORT).show()
+                else Toast.makeText(this, "No se encontró el código", Toast.LENGTH_SHORT).show()
+            } else Toast.makeText(this, "Complete todos los campos para modificar", Toast.LENGTH_SHORT).show()
+        }
+    }
+}
+```
+
+---
 ## 🚀 Siguientes pasos (si quieres avanzar)
 
 Una vez domines esto, te recomiendo aprender:
