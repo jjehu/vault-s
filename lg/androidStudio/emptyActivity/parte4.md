@@ -313,3 +313,321 @@ bd.close()
 > *   **Cerrar la base:** Siempre llama a `bd.close()` al terminar una operación para liberar memoria.
 > *   **Primary Key:** El campo `codigo` es la llave primaria, lo que significa que no pueden existir dos artículos con el mismo código.
 
+# SQlite
+## Clase DBHelper
+Normalmente se crea una nueva clase para gestionar la base de datos `DBHelper.kt`
+
+```kt
+package com.example.miapp
+
+import android.content.ContentValues
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+
+class DBHelper(context: Context) : SQLiteOpenHelper(
+    context,
+    "conversiones.db",
+    null,
+    1
+) {
+
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL(
+            "CREATE TABLE historial (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "tipo TEXT," +
+                    "resultado TEXT" +
+                    ")"
+        )
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("DROP TABLE IF EXISTS historial")
+        onCreate(db)
+    }
+
+    fun insertar(tipo: String, resultado: String) {
+        val db = writableDatabase
+        val values = ContentValues()
+        values.put("tipo", tipo)
+        values.put("resultado", resultado)
+        db.insert("historial", null, values)
+        db.close()
+    }
+
+    fun obtenerTodo(): List<String> {
+        val lista = mutableListOf<String>()
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM historial", null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val tipo = cursor.getString(1)
+                val resultado = cursor.getString(2)
+                lista.add("$tipo :: $resultado")
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+        return lista
+    }
+
+    fun borrarTodo() {
+        val db = writableDatabase
+        db.execSQL("DELETE FROM historial")
+        db.close()
+    }
+}
+```
+## Usarlo en el MainActivity
+Primeramente se crea la instancia:
+```kt
+val db = DBHelper(this)
+```
+
+### Guardar datos
+```kt
+db.insertar("Bs → USD", "${datoIngresado} Bs = %.2f USD".format(datoIngresado/6.96))
+```
+```kt
+db.insertar(
+    "USD → Bs",
+    "${datoIngresado} USD = %.2f Bs".format(datoIngresado*6.96)
+)
+```
+### Mostrar historial
+```kt
+fun cargarDatos() {
+    val textoHistorial = findViewById<TextView>(R.id.editTextTextMultiLine)
+
+    val lista = db.obtenerTodo()
+
+    val texto = StringBuilder()
+    for (item in lista) {
+        texto.append(item).append("\n")
+    }
+
+    textoHistorial.text = texto.toString()
+}
+```
+### Borrar historial
+```kt
+fun borrarHistorial() {
+    db.borrarTodo()
+    cargarDatos()
+    Toast.makeText(this, "Historial eliminado", Toast.LENGTH_SHORT).show()
+}
+```
+
+# Room (Jetpack)
+Aprender **Room** es el siguiente paso correcto. Es básicamente SQLite pero bien organizado, seguro y mucho más fácil de mantener.
+
+---
+
+# 🧱 1. Agregar dependencias (MUY IMPORTANTE)
+
+En tu `build.gradle (Module: app)`:
+
+```kotlin id="2m5m8r"
+dependencies {
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+
+    // Opcional pero recomendado (coroutines)
+    implementation("androidx.room:room-ktx:2.6.1")
+}
+```
+
+Y activa kapt arriba:
+
+```kotlin id="6q4m2y"
+plugins {
+    id("kotlin-kapt")
+}
+```
+
+---
+
+# 🧩 2. Crear la entidad (tabla)
+
+Archivo: `Conversion.kt`
+
+```kotlin id="k2c6x1"
+package com.example.miapp
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "historial")
+data class Conversion(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val tipo: String,
+    val resultado: String
+)
+```
+
+---
+
+# 🧠 3. Crear el DAO (consultas)
+
+Archivo: `ConversionDao.kt`
+
+```kotlin id="9x7c4p"
+package com.example.miapp
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+
+@Dao
+interface ConversionDao {
+
+    @Insert
+    suspend fun insertar(conversion: Conversion)
+
+    @Query("SELECT * FROM historial ORDER BY id DESC")
+    suspend fun obtenerTodo(): List<Conversion>
+
+    @Query("DELETE FROM historial")
+    suspend fun borrarTodo()
+}
+```
+
+---
+
+# 🏗️ 4. Crear la base de datos
+
+Archivo: `AppDatabase.kt`
+
+```kotlin id="7z3m5n"
+package com.example.miapp
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+
+@Database(entities = [Conversion::class], version = 1)
+abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun conversionDao(): ConversionDao
+
+    companion object {
+        @Volatile
+        private var INSTANCE: AppDatabase? = null
+
+        fun getDatabase(context: Context): AppDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java,
+                    "conversiones_db"
+                ).build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
+}
+```
+
+---
+
+# ⚙️ 5. Usarlo en tu MainActivity
+
+Primero:
+
+```kotlin id="8n2v3l"
+val db = AppDatabase.getDatabase(this)
+val dao = db.conversionDao()
+```
+
+---
+
+## 📥 Guardar datos (IMPORTANTE: usar coroutines)
+
+```kotlin id="5b9x2w"
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+CoroutineScope(Dispatchers.IO).launch {
+    dao.insertar(
+        Conversion(
+            tipo = "Bs → USD",
+            resultado = "${datoIngresado} Bs = %.2f USD".format(datoIngresado/6.96)
+        )
+    )
+}
+```
+
+---
+
+## 📤 Mostrar historial
+
+```kotlin id="4v8p1q"
+fun cargarDatos() {
+    val textoHistorial = findViewById<TextView>(R.id.editTextTextMultiLine)
+
+    CoroutineScope(Dispatchers.IO).launch {
+        val lista = dao.obtenerTodo()
+
+        val texto = StringBuilder()
+        for (item in lista) {
+            texto.append("${item.tipo} :: ${item.resultado}\n")
+        }
+
+        runOnUiThread {
+            textoHistorial.text = texto.toString()
+        }
+    }
+}
+```
+
+---
+
+## 🗑️ Borrar historial
+
+```kotlin id="1t6n3k"
+CoroutineScope(Dispatchers.IO).launch {
+    dao.borrarTodo()
+    runOnUiThread {
+        cargarDatos()
+    }
+}
+```
+
+---
+
+# 🧠 Cosas CLAVE que debes entender
+
+* `@Entity` = tabla
+* `@Dao` = consultas SQL
+* `RoomDatabase` = conexión
+* `suspend` = no bloquear la app
+* `Dispatchers.IO` = hilo para base de datos
+
+---
+
+# ⚠️ Error común (muy importante)
+
+Si haces esto sin coroutines:
+
+```kotlin
+dao.insertar(...)
+```
+
+👉 la app se va a crashear (Room no permite DB en el hilo principal).
+
+---
+
+# 🚀 Siguiente nivel (te recomiendo)
+
+Cuando domines esto, el camino profesional es:
+
+* ✅ usar **LiveData o Flow**
+* ✅ usar **RecyclerView** (no TextView)
+* ✅ arquitectura **MVVM**
