@@ -65,6 +65,20 @@ botonGuardar.setOnClickListener {
 > - `commit()`: Esta es la orden final para grabar los cambios en el disco de forma inmediata. Sin esto, nada se guarda.
 > - `finish()`: Cierra la aplicación (la quita de la pantalla).
 
+> [!TIP]
+> Cuando guardamos datos en el archivo de preferencias podemos almacenar distintos tipos de datos según el método que llamemos en el momento de grabar:
+> ```kt
+> editor.putInt("edad",3)
+> editor.putBoolean("activo", true)
+> editor.putFloat("altura", 2.3f)
+> ```
+> Cuando los recuperamos debemos indicar también que tipo de datos extraemos:
+> ```kt
+> val e = preferencias.getInt("edad", 0)
+> val acti = preferencias.getBoolean("activo", false)
+> val alt = preferencias.getFloat("altura", 0f)
+> ```
+
 ## Almacenamiento de datos en un archivo de texto en la memoria interna
 ```kt
 ```
