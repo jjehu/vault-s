@@ -138,7 +138,7 @@ if (fileList().contains("notas.txt")) {
 
 ---
 
-> ![TIP]
+> [!TIP]
 > Tips de Diseño en Android Studio
 > 1.  **Multiline Text:** Usa un `EditText` con la propiedad `inputType="textMultiLine"`.
 > 2.  **Gravedad:** Para que el texto empiece arriba a la izquierda (y no centrado), busca la propiedad `gravity` y marca `top` y `left`.
