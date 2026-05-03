@@ -184,12 +184,19 @@ val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, opciones)
 
 spinner.adapter = adapter
 ```
+> [!TIP]
+> Para que tenga un mejor aspecto se puede agregar:
+> ```kt
+> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+> ```
+
 ---
 **ejemplo:**
 ```kt
 val spinner=findViewById<Spinner>(R.id.spinner)
 val lista = arrayOf("sumar", "restar", "multiplicar", "dividir")
 val adaptador1 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, lista)
+adaptador1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 spinner.adapter = adaptador1
 
 button.setOnClickListener {
