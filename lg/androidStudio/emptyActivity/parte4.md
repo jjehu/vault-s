@@ -138,7 +138,8 @@ if (fileList().contains("notas.txt")) {
 
 ---
 
-> ![TIP] Tips de Diseño en Android Studio
+> ![TIP]
+> Tips de Diseño en Android Studio
 > 1.  **Multiline Text:** Usa un `EditText` con la propiedad `inputType="textMultiLine"`.
 > 2.  **Gravedad:** Para que el texto empiece arriba a la izquierda (y no centrado), busca la propiedad `gravity` y marca `top` y `left`.
 > 3.  **Color de fondo:** Propiedad `background`. Puedes usar hexadecimales como `#ffff00` (amarillo).
@@ -305,7 +306,8 @@ bd.close()
 
 ---
 
-> [!TIP] Tips rápidos de SQLite
+> [!TIP]
+> Tips rápidos de SQLite
 > *   **Tipos de datos:** `int` (entero), `text` (cadena), `real` (decimal).
 > *   **Comillas:** En las consultas SQL, los valores de texto deben ir entre comillas simples (ej: `descripcion='${et2.text}'`), pero los números no.
 > *   **Cerrar la base:** Siempre llama a `bd.close()` al terminar una operación para liberar memoria.
