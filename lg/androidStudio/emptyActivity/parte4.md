@@ -138,20 +138,16 @@ if (fileList().contains("notas.txt")) {
 
 ---
 
-## 💡 Tips de Diseño en Android Studio
-1.  **Multiline Text:** Usa un `EditText` con la propiedad `inputType="textMultiLine"`.
-2.  **Gravedad:** Para que el texto empiece arriba a la izquierda (y no centrado), busca la propiedad `gravity` y marca `top` y `left`.
-3.  **Color de fondo:** Propiedad `background`. Puedes usar hexadecimales como `#ffff00` (amarillo).
+> ![TIP] Tips de Diseño en Android Studio
+> 1.  **Multiline Text:** Usa un `EditText` con la propiedad `inputType="textMultiLine"`.
+> 2.  **Gravedad:** Para que el texto empiece arriba a la izquierda (y no centrado), busca la propiedad `gravity` y marca `top` y `left`.
+> 3.  **Color de fondo:** Propiedad `background`. Puedes usar hexadecimales como `#ffff00` (amarillo).
 
+> [!IMPORTANT]
 > **Recuerda:** Siempre envuelve las operaciones de lectura/escritura en bloques `try-catch` para evitar que la aplicación se detenga si ocurre un error de entrada/salida (IOException).
-## Almacenamiento de datos en un archivo de texto localizado en una tarjeta SD
-```kt
-```
-Esta es una guía resumida y directa para manejar archivos en el almacenamiento externo (Tarjeta SD) de un dispositivo Android utilizando **Kotlin**.
 
----
-
-# 💾 Almacenamiento en Tarjeta SD
+# Almacenamiento de datos en un archivo de texto localizado en una tarjeta SD
+## 💾 Almacenamiento en Tarjeta SD
 A diferencia de la memoria interna, el almacenamiento externo permite guardar archivos con mayor capacidad y facilita compartirlos. Sin embargo, requiere permisos específicos y no todos los dispositivos cuentan con ella.
 
 ### 1. Configuración de Permisos
@@ -309,13 +305,9 @@ bd.close()
 
 ---
 
-## 💡 Tips rápidos de SQLite
-*   **Tipos de datos:** `int` (entero), `text` (cadena), `real` (decimal).
-*   **Comillas:** En las consultas SQL, los valores de texto deben ir entre comillas simples (ej: `descripcion='${et2.text}'`), pero los números no.
-*   **Cerrar la base:** Siempre llama a `bd.close()` al terminar una operación para liberar memoria.
-*   **Primary Key:** El campo `codigo` es la llave primaria, lo que significa que no pueden existir dos artículos con el mismo código.
+> [!TIP] Tips rápidos de SQLite
+> *   **Tipos de datos:** `int` (entero), `text` (cadena), `real` (decimal).
+> *   **Comillas:** En las consultas SQL, los valores de texto deben ir entre comillas simples (ej: `descripcion='${et2.text}'`), pero los números no.
+> *   **Cerrar la base:** Siempre llama a `bd.close()` al terminar una operación para liberar memoria.
+> *   **Primary Key:** El campo `codigo` es la llave primaria, lo que significa que no pueden existir dos artículos con el mismo código.
 
-
-
----
-**¿Te gustaría que te ayude a implementar alguna validación extra, como evitar que los campos queden vacíos antes de guardar?**
