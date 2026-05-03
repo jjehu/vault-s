@@ -88,6 +88,7 @@ Para guardar información, se utiliza la clase `OutputStreamWriter`.
 
 *   **Función clave:** `openFileOutput("nombre.txt", Activity.MODE_PRIVATE)`
 *   **Modo:** `MODE_PRIVATE` asegura que solo tu app lea el archivo y que, si ya existe, se sobrescriba.
+*   **Modo:** `MODE_APPEND` agrega contenido al archivo y no se sobreescriba.
 
 ```kotlin
 try {
