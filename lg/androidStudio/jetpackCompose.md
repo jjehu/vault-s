@@ -1,3 +1,4 @@
+
 # Jetpack Compose
 
 ¿Qué es Jetpack Compose?
@@ -5,6 +6,25 @@ Jetpack Compose es el toolkit moderno de Android para construir interfaces de us
 - Todo se hace con Kotlin
 - UI = funciones
 - Más simple, más rápido, más limpio
+
+---
+
+[Introducción a Jetpack Compose](https://github.com/jjehu/vault-s/edit/main/lg/androidStudio/jetpackCompose.md#introduccion-a-jetpack-compose)
+Configuración del entorno
+Conceptos básicos de Compose
+Layouts (Column, Row, Box)
+Modifiers
+Estado y recomposición
+Eventos y manejo de usuario
+Listas (LazyColumn, LazyRow)
+Navegación
+Arquitectura (MVVM)
+ViewModel + StateFlow
+Consumo de APIs (Retrofit)
+Material Design 3
+Animaciones
+Testing en Compose
+Proyecto final
 
 ---
 ## Introduccion a Jetpack Compose
