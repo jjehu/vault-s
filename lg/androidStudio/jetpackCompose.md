@@ -9,7 +9,7 @@ Jetpack Compose es el toolkit moderno de Android para construir interfaces de us
 
 ---
 
-[Introducción a Jetpack Compose](https://github.com/jjehu/vault-s/edit/main/lg/androidStudio/jetpackCompose.md#introduccion-a-jetpack-compose)
+[Introducción a Jetpack Compose](https://github.com/jjehu/vault-s/blob/main/lg/androidStudio/jetpackCompose.md#introduccion-a-jetpack-compose)
 Configuración del entorno
 Conceptos básicos de Compose
 Layouts (Column, Row, Box)
