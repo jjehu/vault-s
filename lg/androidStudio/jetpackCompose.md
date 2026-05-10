@@ -10,21 +10,21 @@ Jetpack Compose es el toolkit moderno de Android para construir interfaces de us
 ---
 
 [Introducción a Jetpack Compose](https://github.com/jjehu/vault-s/blob/main/lg/androidStudio/jetpackCompose.md#introduccion-a-jetpack-compose)
-1. [Introducción y Configuración del entorno](#introduccion-a-jetpack-compose)
-2. [Conceptos básicos de Compose](parte.md)
-3. [Layouts (Column, Row, Box)](parte.md)
-4. [Modifiers](parte.md)
-5. [Estado y recomposición](parte.md)
-6. [Eventos y manejo de usuario](parte.md)
-7. [Listas (LazyColumn, LazyRow)](parte.md)
-8. [Navegación](parte.md)
-9. [Arquitectura (MVVM)](parte.md)
-10. [ViewModel + StateFlow](parte.md)
-11. [Consumo de APIs (Retrofit)](parte.md)
-12. [Material Design 3](parte.md)
-13. [Animaciones](parte.md)
-14. [Testing en Compose](parte.md)
-15. [Proyecto final](parte.md)
+Introducción y Configuración del entorno
+1. [Conceptos básicos de Compose](parte1.md)
+2. [Layouts (Column, Row, Box)](parte2.md)
+3. [Modifiers](parte3.md)
+4. [Estado y recomposición](parte4.md)
+5. [Eventos y manejo de usuario](parte5.md)
+6. [Listas (LazyColumn, LazyRow)](parte6.md)
+7. [Navegación](parte7.md)
+8. [Arquitectura (MVVM)](parte8.md)
+9. [ViewModel + StateFlow](parte9.md)
+10. [Consumo de APIs (Retrofit)](parte10.md)
+11. [Material Design 3](parte11.md)
+12. [Animaciones](parte12.md)
+13. [Testing en Compose](parte13.md)
+14. [Proyecto final](parte14.md)
 
 ---
 ## Introduccion a Jetpack Compose
@@ -83,99 +83,6 @@ class MainActivity : ComponentActivity() {
 > - Los composables son funciones Kotlin
 > - Compose usa Material Design 3 por defecto
 
-## Conceptos básicos de Jetpack Compose
-### ¿Que es Composable?
-Un `Composable` es una funcion que dibija UI.
-```kt
-@Composable
-fun Mensaje() {
-    Text("Hola Android")
-}
-```
-> [!TIP]
-> La anotación `@Composable` le dice a Compose:
-> `esta función crea una interfaz gráfica`
-
-### Componentes Básicos
-> **Text**
-> ```kt
-> Text("Hola mundo")
-> ```
-> *Muestra texto en pantalla*
-
-
-> **Button**
-> ```kt
-> Button(onClick = { }) {
->     Text("Presionar")
-> }
-> ```
-> *`onClick` ejecuta acciones*
-
-> **Image**
-> ```kt
-> Image(
->     painter = painterResource(id = R.drawable.logo),
->     contentDescription = "Logo"
-> )
-> ```
-> *Muestra imagenes*
-
-### Personalizando componentes
-Tamaño y color de texto
-```kt
-Text(
-    text = "Hola",
-    fontSize = 24.sp,
-    color = Color.Blue
-)
-```
-### Parámetros
-Los composables pueden recibir datos
-```kt
-@Composable
-fun Saludo(nombre: String) {
-    Text("Hola $nombre")
-}
-```
-Uso:
-```kt
-Saludo("Juan")
-```
-### Organizando UI
-Se puede combinar composables:
-```kt
-@Composable
-fun Pantalla() {
-    Column {
-        Text("Título")
-        Button(onClick = { }) {
-            Text("Aceptar")
-        }
-    }
-}
-```
-> [!NOTE]
-> Compose actualiza SOLO lo necesario. Si cambia un dato Compose vuelve a dibujar únicamente esa parte.
-> 
-> Esto se llama: 🔄 Recomposición
-
-### Preview avanzado
-Se puede tener multiples previews
-```kt
-@Preview(showBackground = true)
-@Composable
-fun PreviewPantalla() {
-    Pantalla()
-}
-```
-
-> [!NOTE]
-> Buenas prácticas
-> - ✅ Nombres descriptivos
-> - ✅ Un composable = una responsabilidad
-> - ✅ Reutilizar componentes
-> - ✅ Mantener funciones pequeñas
 
 ## Layouts en Jetpack Compose
 Los layouts organizan los elementos en pantalla.
