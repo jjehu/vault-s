@@ -138,11 +138,11 @@ function draw() {
 }
 ```
 > [!NOTE]
-> En cada ejecución de draw():\
-> 1. Se limpia la pantalla con background(20).\
-> 2. Se dibuja el círculo en la posición actual.\
-> 3. Luego x aumenta en 3.\
-> 4. En el siguiente ciclo, el círculo aparece un poco más a la derecha.\
+> En cada ejecución de draw():
+> 1. Se limpia la pantalla con background(20).
+> 2. Se dibuja el círculo en la posición actual.
+> 3. Luego x aumenta en 3.
+> 4. En el siguiente ciclo, el círculo aparece un poco más a la derecha.
 > Ese pequeño cambio repetido muchas veces produce la sensación de movimiento.
 
 ## 💠 VELOCIDAD
