@@ -468,7 +468,8 @@ function mousePressed() {
 }
 ```
 ## 🔶 Ejemplo 2:
-```js
+
+```javascript
 // ==========================================================
 // PROGRAMA EDUCATIVO DE FIGURAS 3D EN P5.JS
 // ==========================================================
@@ -798,3 +799,127 @@ function mostrarInstrucciones() {
 
 }
 ```
+
+## Conceptos importantes explicados
+
+### 1. Activar modo 3D
+
+```javascript
+createCanvas(800, 600, WEBGL);
+```
+
+Sin `WEBGL`, p5.js trabaja solo en 2D.
+
+---
+
+### 2. Mover objetos
+
+```javascript
+translate(x, y, z);
+```
+
+Mueve una figura en el espacio 3D.
+
+---
+
+### 3. Rotar objetos
+
+```javascript
+rotateX(angulo);
+rotateY(angulo);
+rotateZ(angulo);
+```
+
+Cada una rota sobre un eje diferente.
+
+---
+
+### 4. Orbitar objetos
+
+```javascript
+rotateY(angulo);
+translate(250, 0, 0);
+```
+
+Primero rotas el sistema, luego mueves el objeto.
+Así parece que orbita.
+
+---
+
+### 5. Cámara
+
+```javascript
+camera(x, y, z);
+```
+
+Controla desde dónde vemos la escena.
+
+---
+
+### 6. Colores
+
+```javascript
+fill(r, g, b);
+```
+
+Ejemplos:
+
+```javascript
+fill(255,0,0); // rojo
+fill(0,255,0); // verde
+fill(0,0,255); // azul
+```
+
+---
+
+### 7. Luces
+
+```javascript
+ambientLight();
+directionalLight();
+```
+
+Sin luces, las figuras 3D se ven mal o negras.
+
+---
+
+### 8. push() y pop()
+
+```javascript
+push();
+translate(...);
+box(50);
+pop();
+```
+
+Sirven para que las transformaciones no afecten a otros objetos.
+
+---
+
+## Figuras 3D útiles en p5.js
+
+```javascript
+box(100);
+sphere(50);
+cone(50,100);
+cylinder(50,100);
+torus(70,20);
+plane(200,200);
+```
+
+---
+
+## Ideas para seguir aprendiendo
+
+Puedes agregar:
+
+* Texturas
+* Física
+* Cámara FPS
+* Movimiento con mouse
+* Sombras
+* Sistema solar
+* Videojuegos 3D
+* Colisiones
+* Partículas
+* Modelos OBJ/GLTF
