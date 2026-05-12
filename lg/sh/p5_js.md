@@ -423,3 +423,378 @@ function draw() {
 >   x = x + 3;
 > }
 > ```
+
+
+## 🔶 Ejemplo 1:
+```js
+let x = 200;
+let y = 150;
+let vx = 4;
+let vy = 3;
+let radio = 35;
+
+let r = 0;
+let g = 200;
+let b = 255;
+
+function setup() {
+  createCanvas(800, 500);
+  textSize(18);
+}
+function draw() {
+  background(8, 15, 35);
+  fill(255);
+  text("Repaso p5.js- Segundo Parcial", 20, 30);
+  fill(r, g, b);
+  noStroke();
+  circle(x, y, radio * 2);
+  stroke(255);
+  noFill();
+  text("Haz clic para cambiar el color del orbe", 20, 55);
+  circle(mouseX, mouseY, 30);
+  x = x + vx;
+  y = y + vy;
+  if (x + radio > width || x- radio < 0) {
+    vx = vx *-1;
+  }
+  if (y + radio > height || y- radio < 0) {
+    vy = vy *-1;
+  }
+}
+function mousePressed() {
+  r = random(255);
+  g = random(255);
+  b = random(255);
+}
+```
+## 🔶 Ejemplo 2:
+```js
+// ==========================================================
+// PROGRAMA EDUCATIVO DE FIGURAS 3D EN P5.JS
+// ==========================================================
+// Este ejemplo enseña:
+//
+// 1. Cómo usar WEBGL para trabajar en 3D
+// 2. Cómo crear figuras 3D
+// 3. Cómo hacer que las figuras roten/orbiten
+// 4. Cómo mover la cámara
+// 5. Cómo cambiar colores
+// 6. Cómo usar luces
+// 7. Cómo mover objetos con el teclado
+//
+// Puedes probar este código en:
+// https://editor.p5js.org/
+// ==========================================================
+
+// ----------------------------------------------------------
+// VARIABLES GLOBALES
+// ----------------------------------------------------------
+
+// Ángulo para animaciones
+let angulo = 0;
+
+// Variables para mover la cámara
+let camX = 0;
+let camY = 0;
+let camZ = 600;
+
+// Posición de una esfera
+let esferaX = 0;
+let esferaY = 0;
+
+// ==========================================================
+// SETUP
+// ==========================================================
+// setup() se ejecuta UNA SOLA VEZ al iniciar
+// ==========================================================
+
+function setup() {
+
+  // createCanvas con WEBGL activa el modo 3D
+  createCanvas(1000, 700, WEBGL);
+
+}
+
+// ==========================================================
+// DRAW
+// ==========================================================
+// draw() se ejecuta MUCHAS veces por segundo
+// Aquí colocamos las animaciones
+// ==========================================================
+
+function draw() {
+
+  // --------------------------------------------------------
+  // COLOR DE FONDO
+  // --------------------------------------------------------
+
+  // Fondo oscuro
+  background(15);
+
+  // --------------------------------------------------------
+  // CONFIGURACIÓN DE CÁMARA
+  // --------------------------------------------------------
+  // camera():
+  // camera(posX, posY, posZ, objetivoX, objetivoY, objetivoZ, arribaX, arribaY, arribaZ)
+
+  camera(
+    camX, camY, camZ, // posición de la cámara
+    0, 0, 0,          // hacia dónde mira
+    0, 1, 0           // cuál es arriba
+  );
+
+  // --------------------------------------------------------
+  // ILUMINACIÓN
+  // --------------------------------------------------------
+
+  // Luz ambiental suave
+  ambientLight(80);
+
+  // Luz direccional
+  directionalLight(
+    255, 255, 255, // color de la luz
+    1, 1, -1       // dirección
+  );
+
+  // --------------------------------------------------------
+  // DIBUJAR EJES DE REFERENCIA
+  // --------------------------------------------------------
+  // Esto ayuda a entender el espacio 3D
+
+  dibujarEjes();
+
+  // ========================================================
+  // CUBO GIRATORIO
+  // ========================================================
+
+  // push() guarda la posición actual
+  push();
+
+  // Movemos el cubo hacia la izquierda
+  translate(-250, 0, 0);
+
+  // Rotación en eje X
+  rotateX(angulo);
+
+  // Rotación en eje Y
+  rotateY(angulo * 0.7);
+
+  // Cambiamos color
+  fill(255, 0, 0);
+
+  // Color del borde
+  stroke(255);
+
+  // Dibujar caja 3D
+  // box(tamaño)
+  box(120);
+
+  // pop() restaura la posición original
+  pop();
+
+  // ========================================================
+  // ESFERA ORBITANDO
+  // ========================================================
+
+  push();
+
+  // --------------------------------------------------------
+  // HACER ORBITA
+  // --------------------------------------------------------
+  // rotateY hace girar todo el sistema
+
+  rotateY(angulo);
+
+  // Movemos la esfera lejos del centro
+  translate(250, 0, 0);
+
+  // Color azul
+  fill(0, 100, 255);
+
+  // Dibujar esfera
+  sphere(60);
+
+  pop();
+
+  // ========================================================
+  // TOROIDE GIRATORIO
+  // ========================================================
+
+  push();
+
+  // Mover arriba
+  translate(0, -180, 0);
+
+  // Rotaciones
+  rotateX(angulo);
+  rotateZ(angulo);
+
+  // Color verde
+  fill(0, 255, 100);
+
+  // torus(radio, grosor)
+  torus(70, 20);
+
+  pop();
+
+  // ========================================================
+  // CONO GIRATORIO
+  // ========================================================
+
+  push();
+
+  // Mover abajo
+  translate(0, 180, 0);
+
+  // Rotar
+  rotateY(angulo);
+
+  // Color naranja
+  fill(255, 150, 0);
+
+  // cone(radio, altura)
+  cone(60, 120);
+
+  pop();
+
+  // ========================================================
+  // ESFERA CONTROLADA POR TECLADO
+  // ========================================================
+
+  push();
+
+  // Posición controlada por teclado
+  translate(esferaX, esferaY, 200);
+
+  // Color amarillo
+  fill(255, 255, 0);
+
+  sphere(40);
+
+  pop();
+
+  // --------------------------------------------------------
+  // AUMENTAR ANGULO
+  // --------------------------------------------------------
+  // Esto produce la animación
+
+  angulo += 0.02;
+
+  // --------------------------------------------------------
+  // TEXTO INFORMATIVO
+  // --------------------------------------------------------
+
+  mostrarInstrucciones();
+
+}
+
+// ==========================================================
+// FUNCION PARA DIBUJAR EJES
+// ==========================================================
+
+function dibujarEjes() {
+
+  // EJE X = ROJO
+  stroke(255, 0, 0);
+  line(0, 0, 0, 300, 0, 0);
+
+  // EJE Y = VERDE
+  stroke(0, 255, 0);
+  line(0, 0, 0, 0, 300, 0);
+
+  // EJE Z = AZUL
+  stroke(0, 100, 255);
+  line(0, 0, 0, 0, 0, 300);
+
+}
+
+// ==========================================================
+// CONTROL DE TECLADO
+// ==========================================================
+
+function keyPressed() {
+
+  // --------------------------------------------------------
+  // MOVER CAMARA
+  // --------------------------------------------------------
+
+  // A = izquierda
+  if (key === 'a') {
+    camX -= 20;
+  }
+
+  // D = derecha
+  if (key === 'd') {
+    camX += 20;
+  }
+
+  // W = acercar cámara
+  if (key === 'w') {
+    camZ -= 20;
+  }
+
+  // S = alejar cámara
+  if (key === 's') {
+    camZ += 20;
+  }
+
+  // Q = subir cámara
+  if (key === 'q') {
+    camY -= 20;
+  }
+
+  // E = bajar cámara
+  if (key === 'e') {
+    camY += 20;
+  }
+
+  // --------------------------------------------------------
+  // MOVER ESFERA
+  // --------------------------------------------------------
+
+  // Flecha izquierda
+  if (keyCode === LEFT_ARROW) {
+    esferaX -= 20;
+  }
+
+  // Flecha derecha
+  if (keyCode === RIGHT_ARROW) {
+    esferaX += 20;
+  }
+
+  // Flecha arriba
+  if (keyCode === UP_ARROW) {
+    esferaY -= 20;
+  }
+
+  // Flecha abajo
+  if (keyCode === DOWN_ARROW) {
+    esferaY += 20;
+  }
+
+}
+
+// ==========================================================
+// MOSTRAR INSTRUCCIONES
+// ==========================================================
+
+function mostrarInstrucciones() {
+
+  // resetMatrix evita que el texto se deforme en 3D
+  resetMatrix();
+
+  // Estilo de texto
+  fill(255);
+  textSize(16);
+
+  // Mostrar controles
+  text("CONTROLES:", 20 - width/2, 30 - height/2);
+
+  text("W/S = Zoom cámara", 20 - width/2, 60 - height/2);
+  text("A/D = Mover cámara izquierda/derecha", 20 - width/2, 90 - height/2);
+  text("Q/E = Mover cámara arriba/abajo", 20 - width/2, 120 - height/2);
+
+  text("Flechas = mover esfera amarilla", 20 - width/2, 170 - height/2);
+
+}
+```
