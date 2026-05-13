@@ -1,6 +1,6 @@
 # Conceptos básicos de Jetpack Compose
 ## ¿Que es Composable?
-Un `Composable` es una funcion que dibija UI.
+Un `Composable` es una funcion que dibuja UI.
 ```kt
 @Composable
 fun Mensaje() {
