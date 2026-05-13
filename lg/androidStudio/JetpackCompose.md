@@ -51,14 +51,14 @@ fun PreviewSaludo() {
 
 ## Configuración del entorno
 ### Crear un proyecto con Jetpack Compose
-> Pasos
-> 1. Abrir Android Studio
-> 2. Click en New Project
-> 3. Elegir:
-> - Empty Activity
-> 4. Verifica que esté marcado:
-> - Use Kotlin
-> - Use Jetpack Compose
+**Pasos:**
+1. Abrir Android Studio
+2. Click en New Project
+3. Elegir:
+- Empty Activity
+4. Verifica que esté marcado:
+- Use Kotlin
+- Use Jetpack Compose
 
 ### Estructura básica de un proyecto
 ```kt
