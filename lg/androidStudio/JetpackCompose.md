@@ -14,8 +14,7 @@ Jetpack Compose es el toolkit moderno de Android para construir interfaces de us
 2. [Layouts (Column, Row, Box)](jetpackCompose/parte2.md)
 3. [Modifiers](jetpackCompose/parte3.md)
 4. [Estado y recomposición](jetpackCompose/parte4.md)
-::::::::::::::::::
-5. [Eventos y manejo de usuario](jetpackCompose/parte5.md)
+5. [Eventos y manejo de usuario](jetpackCompose/parte5.md) <--
 6. [Listas (LazyColumn, LazyRow)](jetpackCompose/parte6.md)
 7. [Navegación](jetpackCompose/parte7.md)
 8. [Arquitectura (MVVM)](jetpackCompose/parte8.md)
