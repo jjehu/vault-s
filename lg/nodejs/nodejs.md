@@ -89,119 +89,193 @@ Archivo `db.js`
 ```js
 const mysql = require('mysql2');
 const db = mysql.createConnection({
- host: 'localhost',
- user: 'root',
- password: 'admin', // contraseña de la base de datos
- database: 'hotel'
+host: 'localhost',
+user: 'root',
+password: 'admin', // contraseña de nuestra base de datos
+database: 'hotel'
 });
 module.exports = db;
 ```
 
 Archivo `app.js`
 ```js
-// ======================== IMPORTACIÓN DE MÓDULOS ========================
-const express = require('express'); // Importa Express: framework web para Node.js
-const bodyParser = require('body-parser'); // Middleware para parsear el cuerpo de las peticiones HTTP
-(JSON)
-const path = require('path'); // Módulo nativo de Node.js para manejar rutas de archivos
-const db = require('./db'); // Importa la conexión a la base de datos (archivo ./db.js)
-// ======================== INICIALIZACIÓN DE LA APLICACIÓN ========================
-const app = express(); // Crea una instancia de la aplicación Express
-app.use(bodyParser.json()); // Middleware: permite recibir datos en formato JSON en req.body
-// ==================== RUTAS CRUD (Create, Read, Update, Delete) ====================
-// ------------------- 1. Registrar una nueva reserva (CREATE) -------------------
-app.post('/reservas', (req, res) => { // Ruta POST para crear una reserva
- const { cliente, telefono, pais, dormitorio_id, dias } = req.body;
- // Desestructuración: extrae los datos enviados desde el frontend
- // Primero consultamos el precio del dormitorio
- db.query('SELECT costo_por_dia FROM dormitorios WHERE id=?',
- [dormitorio_id], (err, result) => {
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+const db = require('./db');
 
- if (err || result.length === 0)
- return res.status(400).json({ error: 'Dormitorio inválido' });
- // Validación: si hay error o no existe el dormitorio → error 400 Bad Request
- const costo = result[0].costo_por_dia; // Obtenemos el precio por día
- const total = costo * dias; // Calculamos el total
- // Insertamos la reserva con el total calculado
- db.query('INSERT INTO reservas (cliente, telefono, pais, dormitorio_id, dias, total, fecha) VALUES (?, ?, ?,
-?, ?, ?, NOW())',
- [cliente, telefono, pais, dormitorio_id, dias, total],
- (err, r) => {
- if (err) return res.status(500).json({ error: 'Error al registrar reserva' });
- // Error 500 = Internal Server Error
- res.json({
- mensaje: 'Reserva registrada',
- id: r.insertId, // ID autogenerado por MySQL
- total
- });
- });
- });
-});
-// ------------------- 2. Listar todas las reservas (READ) -------------------
-app.get('/reservas', (req, res) => { // Ruta GET para obtener todas las reservas
- db.query(`SELECT r.id, r.cliente, r.telefono, r.pais,
- r.dormitorio_id, d.numero, d.tipo,
- d.costo_por_dia AS precio_por_dia,
- r.dias, r.total, r.fecha
- FROM reservas r
- JOIN dormitorios d ON r.dormitorio_id = d.id`,
- (err, results) => {
- if (err) return res.status(500).json({ error: 'Error al listar reservas' });
- res.json(results); // Devuelve todas las reservas con información del dormitorio
- });
-});
-// ------------------- 3. Actualizar una reserva (UPDATE) -------------------
-app.put('/reservas/:id', (req, res) => { // Ruta PUT con parámetro dinámico :id
- const { cliente, telefono, pais, dormitorio_id, dias } = req.body;
- const { id } = req.params; // Obtenemos el ID desde la URL
- // Volvemos a consultar el precio (por si cambió el dormitorio)
- db.query('SELECT costo_por_dia FROM dormitorios WHERE id=?',
- [dormitorio_id], (err, result) => {
+const app = express();
 
- if (err || result.length === 0)
- return res.status(400).json({ error: 'Dormitorio inválido' });
- const costo = result[0].costo_por_dia;
- const total = costo * dias;
- db.query('UPDATE reservas SET cliente=?, telefono=?, pais=?, dormitorio_id=?, dias=?, total=? WHERE
-id=?',
- [cliente, telefono, pais, dormitorio_id, dias, total, id],
- (err, r) => {
- if (err) return res.status(500).json({ error: 'Error al actualizar reserva' });
- res.json({
- mensaje: 'Reserva actualizada correctamente',
- total
- });
- });
- });
+app.use(bodyParser.json());
+
+/* =========================
+   REGISTRAR RESERVA
+========================= */
+app.post('/reservas', (req, res) => {
+    const { cliente, telefono, pais, dormitorio_id, dias } = req.body;
+
+    db.query(
+        'SELECT costo_por_dia FROM dormitorios WHERE id = ?',
+        [dormitorio_id],
+        (err, result) => {
+            if (err || result.length === 0) {
+                return res.status(400).json({
+                    error: 'Dormitorio inválido'
+                });
+            }
+
+            const costo = result[0].costo_por_dia;
+            const total = costo * dias;
+
+            db.query(
+                `INSERT INTO reservas
+                (cliente, telefono, pais, dormitorio_id, dias, total, fecha)
+                VALUES (?, ?, ?, ?, ?, ?, NOW())`,
+                [cliente, telefono, pais, dormitorio_id, dias, total],
+                (err, r) => {
+                    if (err) {
+                        return res.status(500).json({
+                            error: 'Error al registrar reserva'
+                        });
+                    }
+
+                    res.json({
+                        mensaje: 'Reserva registrada',
+                        id: r.insertId,
+                        total
+                    });
+                }
+            );
+        }
+    );
 });
-// ------------------- 4. Eliminar una reserva (DELETE) -------------------
-app.delete('/reservas/:id', (req, res) => { // Ruta DELETE con parámetro :id
- const { id } = req.params;
- db.query('DELETE FROM reservas WHERE id=?', [id], (err, result) => {
- if (err) return res.status(500).json({ error: 'Error al eliminar reserva' });
- res.json({ mensaje: 'Reserva eliminada correctamente' });
- });
+
+/* =========================
+   LISTAR RESERVAS
+========================= */
+app.get('/reservas', (req, res) => {
+    db.query(
+        `SELECT
+            r.id,
+            r.cliente,
+            r.telefono,
+            r.pais,
+            r.dormitorio_id,
+            d.numero,
+            d.tipo,
+            d.costo_por_dia AS precio_por_dia,
+            r.dias,
+            r.total,
+            r.fecha
+        FROM reservas r
+        JOIN dormitorios d
+            ON r.dormitorio_id = d.id`,
+        (err, results) => {
+            if (err) {
+                return res.status(500).json({
+                    error: 'Error al listar reservas'
+                });
+            }
+
+            res.json(results);
+        }
+    );
 });
-// ======================== SERVIR ARCHIVOS ESTÁTICOS ========================
-// Servir la página principal (HTML)
+
+/* =========================
+   MODIFICAR RESERVA
+========================= */
+app.put('/reservas/:id', (req, res) => {
+    const { cliente, telefono, pais, dormitorio_id, dias } = req.body;
+    const { id } = req.params;
+
+    db.query(
+        'SELECT costo_por_dia FROM dormitorios WHERE id = ?',
+        [dormitorio_id],
+        (err, result) => {
+            if (err || result.length === 0) {
+                return res.status(400).json({
+                    error: 'Dormitorio inválido'
+                });
+            }
+
+            const costo = result[0].costo_por_dia;
+            const total = costo * dias;
+
+            db.query(
+                `UPDATE reservas
+                SET
+                    cliente = ?,
+                    telefono = ?,
+                    pais = ?,
+                    dormitorio_id = ?,
+                    dias = ?,
+                    total = ?
+                WHERE id = ?`,
+                [cliente, telefono, pais, dormitorio_id, dias, total, id],
+                (err, r) => {
+                    if (err) {
+                        return res.status(500).json({
+                            error: 'Error al actualizar reserva'
+                        });
+                    }
+
+                    res.json({
+                        mensaje: 'Reserva actualizada correctamente',
+                        total
+                    });
+                }
+            );
+        }
+    );
+});
+
+/* =========================
+   ELIMINAR RESERVA
+========================= */
+app.delete('/reservas/:id', (req, res) => {
+    const { id } = req.params;
+
+    db.query(
+        'DELETE FROM reservas WHERE id = ?',
+        [id],
+        (err, result) => {
+            if (err) {
+                return res.status(500).json({
+                    error: 'Error al eliminar reserva'
+                });
+            }
+
+            res.json({
+                mensaje: 'Reserva eliminada correctamente'
+            });
+        }
+    );
+});
+
+/* =========================
+   SERVIR HTML
+========================= */
 app.get('/', (req, res) => {
- res.sendFile(path.join(__dirname, 'index.html'));
- // __dirname = ruta actual del archivo
- // Envía el archivo index.html al navegador
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
-// ======================== INICIO DEL SERVIDOR ========================
-const PORT = 3000; // Puerto en el que correrá el servidor
-// Conectamos a la base de datos ANTES de levantar el servidor
+
+/* =========================
+   SERVIDOR
+========================= */
+const PORT = 3000;
+
 db.connect(err => {
- if (err) {
- console.error('Error conexión MySQL:', err);
- process.exit(1); // Finaliza el proceso con error
- }
- console.log('Conectado a MySQL');
- // Solo si la conexión es exitosa, levantamos el servidor
- app.listen(PORT, () => {
- console.log(`Servidor en http://localhost:${PORT}`);
- });
+    if (err) {
+        console.error('Error conexión MySQL:', err.message || err);
+        process.exit(1);
+    }
+
+    console.log('Conectado a MySQL');
+
+    app.listen(PORT, () => {
+        console.log(`Servidor en http://localhost:${PORT}`);
+    });
 });
 ```
 
@@ -210,248 +284,302 @@ Archivo `index.html`
 <!DOCTYPE html>
 <html lang="es">
 <head>
- <meta charset="UTF-8">
- <title>Sistema de Hotel</title>
- <style>
- body {
- font-family: Arial, sans-serif;
- margin: 20px;
- }
- input,
- button,
- select {
- margin: 5px;
- padding: 8px;
- }
- table {
- border-collapse: collapse;
- margin-top: 20px;
- width: 100%;
- }
- th,
- td {
- border: 1px solid #ccc;
- padding: 8px;
- text-align: center;
- }
- .acciones button {
- margin: 2px;
- padding: 5px 10px;
- }
- </style>
+    <meta charset="UTF-8">
+    <title>Sistema de Hotel</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        input,
+        button,
+        select {
+            margin: 5px;
+            padding: 8px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .acciones button {
+            margin: 2px;
+            padding: 5px 10px;
+        }
+    </style>
 </head>
+
 <body>
- <h1>Sistema de Hotel – Alquiler de Dormitorios</h1>
- <!-- BOTONES -->
- <button onclick="mostrarFormulario()">
- Nueva Reserva
- </button>
- <button onclick="listarReservas()">
- Listar Reservas
- </button>
- <!-- FORMULARIO -->
- <div id="formulario" style="display:none;">
- <input type="hidden" id="id">
- <input
- type="text"
- id="cliente"
- placeholder="Nombre del cliente"
- >
- <input
- type="text"
- id="telefono"
- placeholder="Teléfono"
- >
- <input
- type="text"
- id="pais"
- placeholder="País"
- >
- <select id="dormitorio_id">
- <option value="1">
- Dormitorio 101 - Simple
- </option>
- <option value="2">
- Dormitorio 102 - Doble
- </option>
- <option value="3">
- Dormitorio 103 - Suite
- </option>
- </select>
- <input
- type="number"
- id="dias"
- placeholder="Cantidad de días"
- >
- <br>
- <button onclick="guardarReserva()">
- Guardar
- </button>
- <button onclick="cancelar()">
- Cancelar
- </button>
- </div>
- <!-- TABLA -->
- <table id="tablaReservas">
- <thead>
- <tr>
- <th>ID</th>
- <th>Cliente</th>
- <th>Teléfono</th>
- <th>País</th>
- <th>Dormitorio</th>
- <th>Tipo</th>
- <th>Precio/día</th>
- <th>Días</th>
- <th>Total</th>
- <th>Fecha</th>
- <th>Acción</th>
- </tr>
- </thead>
- <tbody></tbody>
- </table>
- <script>
- const API_URL = "http://localhost:3000/reservas";
- /* =========================
- MOSTRAR FORMULARIO
- ========================= */
- function mostrarFormulario(
- id = null,
- cliente = "",
- telefono = "",
- pais = "",
- dormitorio_id = 1,
- dias = 1
- ) {
- document.getElementById("formulario").style.display = "block";
- document.getElementById("id").value = id || "";
- document.getElementById("cliente").value = cliente;
- document.getElementById("telefono").value = telefono;
- document.getElementById("pais").value = pais;
- document.getElementById("dormitorio_id").value = dormitorio_id;
- document.getElementById("dias").value = dias;
- }
- /* =========================
- CANCELAR
- ========================= */
- function cancelar() {
- document.getElementById("formulario").style.display = "none";
- }
- /* =========================
- GUARDAR RESERVA
- ========================= */
- function guardarReserva() {
- const id = document.getElementById("id").value;
- const cliente = document.getElementById("cliente").value;
- const telefono = document.getElementById("telefono").value;
- const pais = document.getElementById("pais").value;
- const dormitorio_id =
- document.getElementById("dormitorio_id").value;
- const dias =
- document.getElementById("dias").value;
- if (id) {
- // ACTUALIZAR
- fetch(`${API_URL}/${id}`, {
- method: "PUT",
-headers: {
- "Content-Type": "application/json"
- },
-body: JSON.stringify({
- cliente,
-telefono,
-pais,
- dormitorio_id,
- dias
- })
- })
- .then(res => res.json())
- .then(alert)
- .then(listarReservas);
- } else {
- // CREAR
- fetch(API_URL, {
- method: "POST",
-headers: {
- "Content-Type": "application/json"
- },
-body: JSON.stringify({
- cliente,
-telefono,
-pais,
-dormitorio_id,
-dias
- })
- })
- .then(res => res.json())
- .then(alert)
- .then(listarReservas);
- }
- cancelar();
- }
- /* =========================
- BORRAR RESERVA
- ========================= */
- function borrarReserva(id) {
- fetch(`${API_URL}/${id}`, {
- method: "DELETE"
- })
- .then(res => res.json())
- .then(alert)
- .then(listarReservas);
- }
- /* =========================
- LISTAR RESERVAS
- ========================= */
- function listarReservas() {
- fetch(API_URL)
- .then(res => res.json())
- .then(data => {
- const tbody =
- document.querySelector("#tablaReservas tbody");
- tbody.innerHTML = "";
- data.forEach(r => {
- tbody.innerHTML += `
- <tr>
- <td>${r.id}</td>
-<td>${r.cliente}</td>
-<td>${r.telefono}</td>
-<td>${r.pais}</td>
-<td>${r.numero}</td>
-<td>${r.tipo}</td>
-<td>${r.precio_por_dia || ''}</td>
-<td>${r.dias}</td>
-<td>${r.total}</td>
-<td>${r.fecha}</td>
- <td class="acciones">
- <button
- style="background:green;color:white;"
-onclick="mostrarFormulario(
- ${r.id},
- '${r.cliente}',
-'${r.telefono}',
- '${r.pais}',
-${r.dormitorio_id || 1},
-${r.dias}
- )"
- >
- Editar
- </button>
-<button
- style="background:red;color:white;"
-onclick="borrarReserva(${r.id})"
- >
- Borrar
- </button>
- </td>
- </tr>
- `;
- });
- });
- }
- </script>
+
+    <h1>Sistema de Hotel – Alquiler de Dormitorios</h1>
+
+    <!-- BOTONES -->
+    <button onclick="mostrarFormulario()">
+        Nueva Reserva
+    </button>
+
+    <button onclick="listarReservas()">
+        Listar Reservas
+    </button>
+
+    <!-- FORMULARIO -->
+    <div id="formulario" style="display:none;">
+
+        <input type="hidden" id="id">
+
+        <input
+            type="text"
+            id="cliente"
+            placeholder="Nombre del cliente"
+        >
+
+        <input
+            type="text"
+            id="telefono"
+            placeholder="Teléfono"
+        >
+
+        <input
+            type="text"
+            id="pais"
+            placeholder="País"
+        >
+
+        <select id="dormitorio_id">
+            <option value="1">
+                Dormitorio 101 - Simple
+            </option>
+
+            <option value="2">
+                Dormitorio 102 - Doble
+            </option>
+
+            <option value="3">
+                Dormitorio 103 - Suite
+            </option>
+        </select>
+
+        <input
+            type="number"
+            id="dias"
+            placeholder="Cantidad de días"
+        >
+
+        <br>
+
+        <button onclick="guardarReserva()">
+            Guardar
+        </button>
+
+        <button onclick="cancelar()">
+            Cancelar
+        </button>
+    </div>
+
+    <!-- TABLA -->
+    <table id="tablaReservas">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Teléfono</th>
+                <th>País</th>
+                <th>Dormitorio</th>
+                <th>Tipo</th>
+                <th>Precio/día</th>
+                <th>Días</th>
+                <th>Total</th>
+                <th>Fecha</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+
+        <tbody></tbody>
+
+    </table>
+
+    <script>
+
+        const API_URL = "http://localhost:3000/reservas";
+
+        /* =========================
+           MOSTRAR FORMULARIO
+        ========================= */
+        function mostrarFormulario(
+            id = null,
+            cliente = "",
+            telefono = "",
+            pais = "",
+            dormitorio_id = 1,
+            dias = 1
+        ) {
+
+            document.getElementById("formulario").style.display = "block";
+
+            document.getElementById("id").value = id || "";
+            document.getElementById("cliente").value = cliente;
+            document.getElementById("telefono").value = telefono;
+            document.getElementById("pais").value = pais;
+            document.getElementById("dormitorio_id").value = dormitorio_id;
+            document.getElementById("dias").value = dias;
+        }
+
+        /* =========================
+           CANCELAR
+        ========================= */
+        function cancelar() {
+            document.getElementById("formulario").style.display = "none";
+        }
+
+        /* =========================
+           GUARDAR RESERVA
+        ========================= */
+        function guardarReserva() {
+
+            const id = document.getElementById("id").value;
+
+            const cliente = document.getElementById("cliente").value;
+            const telefono = document.getElementById("telefono").value;
+            const pais = document.getElementById("pais").value;
+
+            const dormitorio_id =
+                document.getElementById("dormitorio_id").value;
+
+            const dias =
+                document.getElementById("dias").value;
+
+            if (id) {
+
+                // ACTUALIZAR
+                fetch(`${API_URL}/${id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        cliente,
+                        telefono,
+                        pais,
+                        dormitorio_id,
+                        dias
+                    })
+                })
+                .then(res => res.json())
+                .then(alert)
+                .then(listarReservas);
+
+            } else {
+
+                // CREAR
+                fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        cliente,
+                        telefono,
+                        pais,
+                        dormitorio_id,
+                        dias
+                    })
+                })
+                .then(res => res.json())
+                .then(alert)
+                .then(listarReservas);
+            }
+
+            cancelar();
+        }
+
+        /* =========================
+           BORRAR RESERVA
+        ========================= */
+        function borrarReserva(id) {
+
+            fetch(`${API_URL}/${id}`, {
+                method: "DELETE"
+            })
+            .then(res => res.json())
+            .then(alert)
+            .then(listarReservas);
+        }
+
+        /* =========================
+           LISTAR RESERVAS
+        ========================= */
+        function listarReservas() {
+
+            fetch(API_URL)
+                .then(res => res.json())
+                .then(data => {
+
+                    const tbody =
+                        document.querySelector("#tablaReservas tbody");
+
+                    tbody.innerHTML = "";
+
+                    data.forEach(r => {
+
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${r.id}</td>
+                                <td>${r.cliente}</td>
+                                <td>${r.telefono}</td>
+                                <td>${r.pais}</td>
+                                <td>${r.numero}</td>
+                                <td>${r.tipo}</td>
+                                <td>${r.precio_por_dia || ''}</td>
+                                <td>${r.dias}</td>
+                                <td>${r.total}</td>
+                                <td>${r.fecha}</td>
+
+                                <td class="acciones">
+
+                                    <button
+                                        style="background:green;color:white;"
+                                        onclick="mostrarFormulario(
+                                            ${r.id},
+                                            '${r.cliente}',
+                                            '${r.telefono}',
+                                            '${r.pais}',
+                                            ${r.dormitorio_id || 1},
+                                            ${r.dias}
+                                        )"
+                                    >
+                                        Editar
+                                    </button>
+
+                                    <button
+                                        style="background:red;color:white;"
+                                        onclick="borrarReserva(${r.id})"
+                                    >
+                                        Borrar
+                                    </button>
+
+                                </td>
+                            </tr>
+                        `;
+                    });
+                });
+        }
+
+    </script>
+
 </body>
 </html>
-
 ```
 
 ## Ejecutar servidor
