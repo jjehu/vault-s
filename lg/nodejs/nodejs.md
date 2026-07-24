@@ -1,6 +1,21 @@
+# ¿Qué es Node?
+Tradicionalmente, JavaScript solo vivía dentro de los navegadores web (Chrome, Firefox, etc.) y se usaba para manipular páginas web (el frontend).
+
+Node.js (o simplemente Node) es un entorno de ejecución que permite ejecutar código JavaScript fuera del navegador. Esto significa que ahora puedes usar JavaScript para escribir programas de backend, crear servidores, interactuar con bases de datos y manipular archivos en tu computadora.
+
+**Conceptos clave:**
+1. Motor V8: Node está construido sobre el mismo motor de JavaScript que usa Google Chrome (el motor V8), lo que lo hace extremadamente rápido.
+2. Sin DOM: En Node no existen elementos como `document` o `window`, porque no hay una página web que manipular. En su lugar, tienes objetos globales como `process` (para info del sistema) o `require` (que vimos en la lección anterior).
+3. Cómo ejecutarlo: Para ejecutar un archivo JS con Node, abres tu terminal (línea de comandos), te ubicas en la carpeta de tu archivo y escribes el comando `node` seguido del nombre del archivo.
+
 # Guia de Node.js con db en MySQL
-- [Primeros pasos](parte1.md)
-- []()
+- [Instalación](parte1.md)
+- [npm](parte2.md)
+- [package.json](parte3.md)
+- [Crear proyectos](parte4.md)
+- [Express](parte5.md)
+- [MySQL](parte6.md)
+- [Node + MySQL](parte7.md)
 
 # Guia corta de Node.js
 
