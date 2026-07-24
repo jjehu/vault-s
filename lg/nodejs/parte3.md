@@ -13,7 +13,7 @@ El `package.json` es un archivo de texto en formato JSON que actúa como el "doc
 Lo mejor de todo: Si se borra la carpeta `node_modules` (que es muy pesada), se puede recuperar todas las librerías simplemente ejecutando `npm install` en la terminal. Node leerá el `package.json` y descargará todo lo que falte automáticamente.
 
 ejemplo de `package.json`:
-```
+```json
 {
   "name": "api-rest-tienda",
   "version": "1.0.0",
