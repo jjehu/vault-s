@@ -1,5 +1,6 @@
 # Guia de Node.js con db en MySQL
-[Primeros pasos](parte1.md)
+- [Primeros pasos](parte1.md)
+- []()
 
 # Guia corta de Node.js
 
