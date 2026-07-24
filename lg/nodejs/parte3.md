@@ -11,3 +11,18 @@ El `package.json` es un archivo de texto en formato JSON que actúa como el "doc
 4. `devDependencies`: Aquí se guardan los paquetes que solo se necesita durante el desarrollo (como herramientas de testing o nodemon). Se instalan usando `npm install --save-dev <paquete>`.
 
 Lo mejor de todo: Si se borra la carpeta `node_modules` (que es muy pesada), se puede recuperar todas las librerías simplemente ejecutando `npm install` en la terminal. Node leerá el `package.json` y descargará todo lo que falte automáticamente.
+
+ejemplo de `package.json`:
+```
+{
+  "name": "api-rest-tienda",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
+```
