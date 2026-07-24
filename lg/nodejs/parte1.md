@@ -1,4 +1,4 @@
-# Instalación y primeros pasos 
+# Instalación
 
 ## Node.js
 *Descargar Node.js*
