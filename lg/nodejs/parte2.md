@@ -12,3 +12,8 @@ En el mundo de la programación, no necesitas reinventar la rueda. Si quieres ag
 Ejemplo: `npm install express` (descarga la librería Express que usaremos mas adelante).
 3. `node_modules`: Es una carpeta que se genera automáticamente al instalar paquetes. Contiene todo el código real de las librerías que descargaste. NUNCA debes subir esta carpeta a GitHub o compartirla, ya que ocupa mucho espacio.
 4. `package-lock.json`: Archivo que registra las versiones exactas de los paquetes instalados.
+
+Podemos tambien incializar el proyecto y saltar las preguntas:
+```
+npm init -y
+```
