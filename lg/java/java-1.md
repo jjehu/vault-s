@@ -65,11 +65,103 @@ public class Ejemplo{
 
 ## Tipos de Datos Primitivos
 Java tiene tipos de datos primitivos: enteros (byte, short, int, long), reales (float, double), caracteres (char) y booleanos (boolean). Cada uno tiene un rango y tamaño específico en memoria.
+Las diferencias entre los diferentes tipos enteros y entre los diferentes tipos reales se encuentran en el rango que soportan los mismos y en el tamaño de memoria que
+requieren:
+
+| TIPO | DESCRIPCIÓN | BYTES | RANGO |
+| :---: | :---: | :---: | :---: |
+| byte | Entero de 1 byte | 1 | -128 a +127 |
+| short | Entero pequeño | 2 | -32768 a +32767 |
+| int | Entero | 4 | -2147483648 a 2147483647 |
+| long | Entero grande | 8 | -9223372036854775808 a 9223372036854775807 |
+| float | Real simple precisión | 4 | ±1.40239846e -44 a ±3.40282347e +38 |
+| double | Real doble precisión | 8 | ±4.9406564584124e-308 a ±1.7976931348623e +308 |
+| char | Carácter UNICODE | 2 | \u0000 a \uffff (hex) o \000 a \777 (octal)  |
+| boolean | Booleano |  | false o true |
+
+> [!NOTE]
+> El rango de cada tipo queda definido por las diferentes combinaciones de los valores binarios que caben en la cantidad de bytes de la memoria RAM que utiliza cada tipo; por ejemplo, el tipo byte, ocupa 1 byte, equivalente a 8 bits; y con 8 bits, se tiene una combinación de 2⁸ = 256 valores binarios diferentes, de los cuales, la mitad se asigna a los valores negativos (-1 a -128) y la mitad a los valores positivos (0 a +127).\
+> Los valores límites de los tipos de datos numéricos se pueden obtener a través de las constantes `MIN_VALUE` Y `MAX_VALUE` asociados a las clases de esos tipos. Por ejemplo: `Integer.MAX_VALUE`. 
 
 ## Literales
 Los literales son valores fijos en el código, como números, caracteres, booleanos y cadenas. Pueden escribirse en diferentes bases (decimal, hexadecimal, octal) y con notación científica para reales.
+Los literales son valores que se escriben directamente dentro de un programa, como números, caracteres, palabras o valores lógicos.
+
+### Literales enteros
+Son números sin decimales, como `23`, `-345` o `100`.
+- Por defecto, los números enteros son de tipo **int**.
+- Para indicar que un número es de tipo long, se agrega `L` al final. Ejemplo: `1234L`.
+- Los números hexadecimales comienzan con `0x`. Ejemplo: `0x58` o `0xFF`.
+- Los números octales comienzan con `0`. Ejemplo: `077` o `023`.
+
+Ejemplo:
+```java
+System.out.println(12345);
+System.out.println(12345L);
+System.out.println(077);
+System.out.println(0xFF);
+```
+### Literales reales
+Son números que contienen decimales, por ejemplo `2.0`, `4.232` o `-23.44`.
+- Por defecto, estos números son de tipo **double**.
+- Para indicar que son de tipo float, se agrega `f` o `F`. Ejemplo: `23.32f`.
+- También pueden escribirse usando notación científica, como `3.456e3` o `1.2E-300`.
+
+Ejemplo:
+```java
+System.out.println(123.456f);
+System.out.println(222.222);
+System.out.println(-3.e38f);
+```
+### Literales de tipo carácter (char)
+Representan un solo carácter, como una letra, número o símbolo. Se escriben entre **comillas simples**.
+
+Ejemplos:
+```java
+'A'
+'a'
+'5'
+```
+También es posible representar un carácter utilizando su código ASCII. Por ejemplo, el número `65` corresponde a `'A'` y el `97` corresponde a `'a'`.
+```java
+System.out.println((char)65);
+System.out.println((char)97);
+```
+Otra forma es utilizar Unicode, que permite representar una gran variedad de caracteres. Se escribe utilizando `\u` seguido de un código hexadecimal.
+
+Es importante utilizar una codificación adecuada, como UTF-8, para que caracteres especiales como `á`, `ñ` o `é` se muestren correctamente.
+
+### Literales booleanos
+Los valores booleanos solo pueden tener dos opciones:
+- `true` → verdadero.
+- `false` → falso.
+Ejemplo:
+```java
+System.out.println(true);
+System.out.println(false);
+```
+### Literales de tipo cadena (String)
+Una cadena es un conjunto de cero o más caracteres y se escribe entre comillas dobles.
+
+Ejemplos:
+```java
+"Hola"
+"Programación"
+"Esta es una cadena"
+""
+```
+Es importante diferenciar una cadena de un carácter:
+- `"a"` → es una cadena (String).
+- `'a'` → es un carácter (char).
+
 ## Secuencias de Escape
-Son caracteres especiales dentro de cadenas, como   (nueva línea), \t (tabulador), \ (barra invertida), \' (comilla simple) y " (comilla doble).
+Son caracteres especiales dentro de cadenas, como: 
+`\n` nueva línea\
+`\t` tabulador\
+`\\` barra invertida (`\`)\
+`\'` comilla simple (`'`)\
+`\"` comilla doble (`"`)
+
 ## Variables
 Una variable es un nombre asociado a un espacio de memoria para almacenar un valor. Java es fuertemente tipado, por lo que cada variable debe declararse con un tipo. Es recomendable inicializarlas para evitar errores.
 ## Operador de Asignación
