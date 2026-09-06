@@ -969,12 +969,669 @@ El resultado será:
 Por lo tanto, mientras `break` termina completamente el ciclo, `continue` omite únicamente la iteración actual.
 
 ## Contadores y acumuladores
+Los contadores y acumuladores son variables que permiten almacenar información durante la ejecución de un programa. Son especialmente útiles cuando se necesita contar elementos, calcular sumas o realizar operaciones sobre un conjunto de datos.
+
+### Contadores
+Un contador es una variable que permite llevar la cuenta de cuántas veces ocurre una determinada acción o proceso.\
+Generalmente, un contador comienza con un valor inicial, normalmente `0`, y aumenta o disminuye mediante una cantidad fija, por ejemplo:
+```
+contador++
+```
+También puede utilizarse:
+```
+contador--
+```
+El operador `++` incrementa el valor de la variable en 1, mientras que `--` lo disminuye en 1.
+
+Ejemplo\
+Si se desea contar cuántos números son positivos, se puede utilizar una variable llamada `positivos`:
+```java
+int positivos = 0;
+
+if (numero >= 0) {
+    positivos++;
+}
+```
+Cada vez que se encuentra un número positivo, el contador aumenta en uno.
+
+### Acumuladores
+Un acumulador es una variable que almacena progresivamente un resultado a medida que el programa procesa diferentes valores.
+
+A diferencia de un contador, que normalmente aumenta o disminuye en una cantidad fija, un acumulador puede modificarse utilizando diferentes valores.
+
+Por ejemplo:
+```java
+int suma = 0;
+
+suma = suma + numero;
+```
+En este caso, cada número leído se agrega al contenido anterior de suma.
+
+También puede escribirse de una manera más corta:
+```java
+suma += numero;
+```
+Los acumuladores son utilizados frecuentemente para calcular sumas, productos, promedios y otros resultados que dependen de varios valores.
+
+**Ejemplo:**
+```java
+import java.util.Scanner;
+
+public class Ejemplo78 {
+    public static void main(String[] args) {
+        Scanner tec = new Scanner(System.in);
+
+        int n = tec.nextInt();
+        int numero;
+        int positivos = 0;
+        int negativos = 0;
+
+        for (int i = 0; i < n; i++) {
+            numero = tec.nextInt();
+
+            if (numero >= 0) {
+                positivos++;
+            } else {
+                negativos++;
+            }
+        }
+
+        System.out.println(
+            "Son " + positivos + " positivos y " + negativos + " negativos."
+        );
+    }
+}
+```
+
 ## Metodos definidos por el usuario
+Java cuenta con miles de clases y métodos que permiten realizar diferentes tareas y reutilizar código. Los métodos ayudan a **dividir un problema en partes más pequeñas**, organizar los algoritmos y hacer que los programas sean más fáciles de desarrollar, revisar, depurar y ampliar.
+
+Además de utilizar los métodos que proporciona Java, el programador puede **crear sus propios métodos** e incluso agruparlos en clases y bibliotecas para utilizarlos posteriormente.
+
+Un programa puede contener muchos métodos. Sin embargo, normalmente existe un único método principal llamado `main`, que se encarga de iniciar la ejecución del programa y puede llamar a otros métodos. Estos, a su vez, pueden llamar a otros métodos.
+
+### Estructura de un método
+
+La estructura general de un método es:
+
+```
+public [static] tipoDevuelto nombreMetodo([listaParametros]) {
+    // instrucciones
+    [return valor];
+}
+```
+
+Los elementos entre corchetes son opcionales.
+
+- **`public`**: permite que el método pueda ser utilizado desde otras clases.
+- **`static`**: indica que el método pertenece a la clase y puede utilizarse sin crear un objeto.
+- **`tipoDevuelto`**: indica el tipo de dato que devuelve el método. Si no devuelve ningún valor, se utiliza `void`.
+- **`nombreMetodo`**: identifica al método.
+- **`listaParametros`**: contiene los datos que recibe el método, indicando el tipo de cada uno.
+- **`return`**: devuelve un valor cuando el método tiene un tipo de retorno diferente de `void`.
+
+Un método puede recibir **cero o más parámetros** y puede devolver **cero o un solo valor**.
+
+### Ejemplo: método `saludo()`
+
+El siguiente ejemplo muestra un método que imprime varios mensajes. El método `main` lo llama y posteriormente imprime `"Fin"`.
+
+```
+public class Ejemplo {
+
+    public static void saludo() {
+        System.out.println("Hola Mundo");
+        System.out.println("¡¡estudio informática!!");
+    }
+
+    public static void main(String[] args) {
+        saludo();
+        System.out.println("Fin");
+    }
+}
+```
+
+**Salida:**
+
+```
+Hola Mundo
+¡¡estudio informática!!
+Fin
+```
+
+### Ejemplo: método `ordenar3()`
+
+El método `ordenar3()` recibe tres números enteros y los imprime de menor a mayor. El método `main` se encarga de leer los valores y enviarlos al método.
+
+```
+public static void ordenar3(int a, int b, int c) {
+    if (a <= b && b <= c)
+        System.out.println(a + " " + b + " " + c);
+    else if (a <= c && c <= b)
+        System.out.println(a + " " + c + " " + b);
+    else if (b <= a && a <= c)
+        System.out.println(b + " " + a + " " + c);
+    else if (b <= c && c <= a)
+        System.out.println(b + " " + c + " " + a);
+    else if (c <= a && a <= b)
+        System.out.println(c + " " + a + " " + b);
+    else
+        System.out.println(c + " " + b + " " + a);
+}
+```
+
+Por ejemplo, para la entrada:
+
+```
+85 2 29
+```
+
+La salida será:
+
+```
+2 29 85
+```
+
+### Ejemplo: método `fibo()`
+
+El método `fibo()` recibe un número natural `n` e imprime los primeros `n` términos de la serie de Fibonacci.
+
+```
+public static void fibo(int n) {
+    int a = 1, b = 1, c;
+
+    if (n == 1) {
+        System.out.println(1);
+    } else if (n >= 2) {
+        System.out.print("1 1 ");
+
+        for (int i = 3; i <= n; i++) {
+            c = a + b;
+            a = b;
+            b = c;
+            System.out.print(c + " ");
+        }
+    }
+}
+```
+
+Para una entrada de `8`, el resultado es:
+
+```
+1 1 2 3 5 8 13 21
+```
+
+### Ejemplo: método `factorial()`
+
+A diferencia de los métodos anteriores, `factorial()` **devuelve un valor**. Recibe un número natural y calcula su factorial.
+
+```
+public static int factorial(int n) {
+    int fact = 1;
+
+    for (int i = 1; i <= n; i++) {
+        fact = fact * i;
+    }
+
+    return fact;
+}
+```
+
+El método `main` puede utilizar el valor devuelto de la siguiente manera:
+
+```
+public static void main(String[] args) {
+    Scanner tec = new Scanner(System.in);
+    int n = tec.nextInt();
+
+    System.out.println(factorial(n));
+}
+```
+
+Para la entrada:
+
+```
+5
+```
+
+La salida será:
+
+```
+120
+```
+
+### Ejemplo: método `esFactorial()`
+El método `esFactorial()` recibe un número natural y devuelve un valor booleano: `true` si el número corresponde al factorial de algún número y `false` en caso contrario.
+
+```
+public static boolean esFactorial(int n) {
+    boolean factorial = true;
+
+    if (n == 1) {
+        return true;
+    }
+
+    if (n >= 2) {
+        int divisor = 2;
+
+        while (factorial && n > 1) {
+            if (n % divisor != 0) {
+                factorial = false;
+            }
+
+            n = n / divisor;
+            divisor++;
+        }
+    }
+
+    return factorial;
+}
+```
+
+El método `main` utiliza el resultado para mostrar un mensaje:
+
+```
+if (esFactorial(n))
+    System.out.println(n + ", es un factorial");
+else
+    System.out.println(n + ", no es un factorial");
+```
+
+Para la entrada:
+
+```
+120
+```
+
+La salida será:
+
+```
+120, es un factorial
+```
 ## Bibliotecas predefinidas
-## Ambito de variables
-## Creacion y ejecucion de un programa Java desde consola
-## Codigo Ascii
-## Codigo Unicode
+
+Java incluye una gran cantidad de **bibliotecas predefinidas** que contienen clases y métodos ya implementados y probados. Estas herramientas permiten realizar diferentes tareas sin tener que programar todo desde cero.
+
+Entre las clases más utilizadas se encuentran `Scanner`, `Math` y `String`.
+
+### Clase `Math`
+
+La clase `Math` contiene constantes y métodos estáticos relacionados con operaciones matemáticas. Los métodos estáticos se utilizan escribiendo primero el nombre de la clase, seguido de un punto y el nombre del método.
+
+Por ejemplo:
+
+```
+Math.sqrt(25);
+```
+
+Esto calcula la raíz cuadrada de `25`.
+
+### Constantes de `Math`
+
+Las constantes más utilizadas son:
+
+| Constante | Descripción |
+| --- | --- |
+| `Math.PI` | Representa el valor de π. |
+| `Math.E` | Representa el número de Euler o número neperiano. |
+
+### Métodos matemáticos más utilizados
+
+| Método | Descripción |
+| --- | --- |
+| `Math.abs(x)` | Obtiene el valor absoluto de `x`. |
+| `Math.sin(x)` | Calcula el seno de `x`. |
+| `Math.cos(x)` | Calcula el coseno de `x`. |
+| `Math.tan(x)` | Calcula la tangente de `x`. |
+| `Math.asin(x)` | Calcula el arco seno. |
+| `Math.acos(x)` | Calcula el arco coseno. |
+| `Math.atan(x)` | Calcula el arco tangente. |
+| `Math.atan2(y, x)` | Calcula el arco tangente teniendo en cuenta el cuadrante. |
+| `Math.exp(x)` | Calcula `e` elevado a `x`. |
+| `Math.log(x)` | Calcula el logaritmo natural. |
+| `Math.log10(x)` | Calcula el logaritmo en base 10. |
+| `Math.sqrt(x)` | Calcula la raíz cuadrada. |
+| `Math.ceil(x)` | Redondea hacia arriba. |
+| `Math.floor(x)` | Redondea hacia abajo. |
+| `Math.rint(x)` | Devuelve el entero más cercano como número real. |
+| `Math.pow(a, b)` | Calcula `a` elevado a `b`. |
+| `Math.round(x)` | Redondea al entero más cercano. |
+| `Math.random()` | Genera un número aleatorio entre `0.0` y `1.0`. |
+| `Math.max(a, b)` | Devuelve el mayor entre `a` y `b`. |
+| `Math.min(a, b)` | Devuelve el menor entre `a` y `b`. |
+| `Math.toDegrees(x)` | Convierte radianes a grados. |
+| `Math.toRadians(x)` | Convierte grados a radianes. |
+
+### Ejemplo: `Math.max()` y `Math.min()`
+
+Los métodos `max()` y `min()` permiten obtener, respectivamente, el valor mayor y menor entre dos números.
+
+```
+public class Ejemplo {
+    public static void main(String[] args) {
+        System.out.println("El menor de 53 y 46 es: " + Math.min(53, 46));
+        System.out.println("El mayor de 53 y 46 es: " + Math.max(53, 46));
+    }
+}
+```
+
+**Salida:**
+
+```
+El menor de 53 y 46 es: 46
+El mayor de 53 y 46 es: 53
+```
+
+### Ejemplo: potencias y logaritmos
+
+La clase `Math` también permite trabajar con potencias, raíces y logaritmos.
+
+```
+public class Ejemplo {
+    public static void main(String[] args) {
+        double x = 25;
+        double y = 4;
+
+        System.out.println("Potencia: " + Math.pow(x, y));
+        System.out.println("Raíz cuadrada: " + Math.sqrt(x));
+        System.out.println("Exponencial: " + Math.exp(y));
+        System.out.println("Logaritmo natural: " + Math.log(x));
+        System.out.println("Logaritmo decimal: " + Math.log10(x));
+    }
+}
+```
+
+Por ejemplo, `Math.pow(25, 4)` calcula `25⁴`, mientras que `Math.sqrt(25)` devuelve `5`.
+
+### Métodos de redondeo
+
+Java proporciona diferentes métodos para redondear números:
+
+- `Math.round(x)`: redondea al entero más cercano.
+- `Math.ceil(x)`: redondea hacia arriba.
+- `Math.floor(x)`: redondea hacia abajo.
+
+Ejemplo:
+
+```
+System.out.println(Math.round(2.6)); // 3
+System.out.println(Math.ceil(2.4));  // 3.0
+System.out.println(Math.floor(2.6)); // 2.0
+```
+
+### Funciones trigonométricas
+
+Los métodos trigonométricos de `Math`, como `sin()`, `cos()` y `tan()`, trabajan con **radianes**. Por eso, cuando se tiene un ángulo en grados, primero debe convertirse.
+
+```
+public class Ejemplo {
+    public static void main(String[] args) {
+        double grados = 30.0;
+        double radianes = Math.toRadians(grados);
+
+        System.out.println("sin(30) = " + Math.sin(radianes));
+        System.out.println("cos(30) = " + Math.cos(radianes));
+        System.out.println("tan(30) = " + Math.tan(radianes));
+    }
+}
+```
+
+Para convertir entre grados y radianes se utilizan:
+
+```
+Math.toRadians(grados);
+Math.toDegrees(radianes);
+```
+
+### Generación de números aleatorios
+
+El método:
+
+```
+Math.random();
+```
+
+genera un número decimal aleatorio que cumple:
+
+```
+0.0 <= número < 1.0
+```
+
+Para generar un número dentro de un intervalo `[a, b)`, se puede utilizar:
+
+```
+double numero = Math.random() * (b - a) + a;
+```
+
+Por ejemplo:
+
+```
+double numero = Math.random() * (10 - 5) + 5;
+```
+
+Esto genera un número aleatorio entre `5` y `10`, sin incluir el `10`.
+
+### Ejemplo: lanzar cinco dados
+
+`Math.random()` también puede utilizarse para simular el lanzamiento de dados:
+
+```
+public class Ejemplo {
+    public static void main(String[] args) {
+        int a = 1, b = 6;
+
+        for (int i = 0; i < 5; i++) {
+            int dado = (int) (Math.random() * (b + 1 - a)) + a;
+            System.out.print(dado + " ");
+        }
+    }
+}
+```
+
+El programa genera cinco valores aleatorios entre `1` y `6`, simulando cinco dados.
+
+### Clase `String`
+
+La clase `String` contiene diferentes métodos para trabajar con **cadenas de texto**. Las cadenas son fundamentales para el manejo de información textual en Java.
+
+Algunos ejemplos de operaciones que pueden realizarse con `String` son obtener la longitud de un texto, comparar cadenas, buscar caracteres y modificar o extraer partes de una cadena.
+
+El estudio detallado de esta clase se puede realizar posteriormente, ya que posee una gran cantidad de métodos y funcionalidades.
+
+
+Claro. Lo dejo con el mismo estilo de las secciones anteriores: **resumido, en tercera persona, entendible y listo para copiar en un `README.md`**.
+
+ Ámbito de las variables y ejecución de programas Java
+
+## Ámbito de las variables
+
+El **ámbito de una variable** es la parte del programa en la que dicha variable puede ser utilizada o es "visible".
+
+En Java existen principalmente tres tipos de ámbito:
+
+- **Variable global o de clase:** se declara fuera de cualquier método. Es un atributo de la clase y puede ser utilizada dentro de los métodos de esa clase.
+- **Variable local o de método:** se declara dentro de un método, pero fuera de otros bloques internos. Puede utilizarse durante todo el método.
+- **Variable de bloque:** se declara dentro de un bloque de código, como un `if`, `for`, `while` o cualquier conjunto de instrucciones encerrado entre `{}`. Solo puede utilizarse dentro de ese bloque.
+
+### Ejemplo de los diferentes ámbitos
+
+```
+public class UnaClase {
+
+    private int numero1; // Variable de clase
+
+    public void calcular() {
+        int a = 1; // Variable local del método
+
+        if (a > 0) {
+            int b = 2; // Variable de bloque
+
+            System.out.println(a + ", " + b);
+
+            for (int c = 0; c < 3; c++) {
+                System.out.println(a + ", " + b + ", " + c);
+            }
+
+            // c ya no existe aquí
+        }
+
+        // b ya no existe aquí
+        System.out.println(a);
+
+        // a deja de existir al finalizar el método
+    }
+
+    // numero1 deja de existir al finalizar la clase
+}
+```
+
+Una variable solo puede utilizarse dentro de su ámbito. Cuando el programa sale del bloque donde fue declarada, esa variable deja de estar disponible.
+
+### Variables con el mismo nombre
+
+Puede ocurrir que una variable de ámbito general y otra de ámbito interno tengan el mismo nombre. En ese caso, la variable del ámbito más interno **oculta temporalmente** a la variable externa.
+
+Cuando termina el ámbito de la variable interna, la variable externa vuelve a estar disponible y conserva su valor original.
+
+Por ejemplo:
+
+```
+public class Ejemplo {
+
+    static int a = 3; // Variable de clase
+
+    public static void main(String[] args) {
+
+        for (int a = 0; a < 5; a++) {
+            System.out.print(a + " ");
+        }
+
+        System.out.println();
+
+        System.out.println(a);
+    }
+}
+```
+
+**Salida:**
+
+```
+0 1 2 3 4
+3
+```
+
+Dentro del `for`, la variable `a` local oculta temporalmente a la variable `a` de la clase. Al terminar el ciclo, vuelve a utilizarse la variable de clase, cuyo valor sigue siendo `3`.
+
+---
+
+## Creación y ejecución de un programa Java desde consola
+
+Para crear y ejecutar un programa Java desde la consola, primero es necesario tener **Java instalado y configurado** correctamente.
+
+El proceso básico es el siguiente:
+
+### 1\. Crear el archivo Java
+
+Se crea un archivo con extensión `.java`, por ejemplo:
+
+```
+Ejemplo.java
+```
+
+Dentro del archivo se puede escribir un programa como el siguiente:
+
+```
+import java.util.Scanner;
+
+public class Ejemplo {
+
+    public static void main(String[] args) {
+        Scanner tec = new Scanner(System.in);
+
+        System.out.println("PROGRAMA QUE SUMA DOS NUMEROS");
+
+        System.out.print("Escriba el primer número: ");
+        int a = tec.nextInt();
+
+        System.out.print("Escriba el segundo número: ");
+        int b = tec.nextInt();
+
+        System.out.println("La suma de " + a + " y " + b + " es: " + (a + b));
+    }
+}
+```
+
+### 2\. Abrir la consola
+
+Se debe abrir una terminal o consola y acceder a la carpeta donde se encuentra el archivo.
+
+Algunos comandos básicos son:
+
+| Comando | Función |
+| --- | --- |
+| `D:` | Cambia a la unidad `D:`. |
+| `cd nombreCarpeta` | Entra en una carpeta. |
+| `cd ..` | Regresa a la carpeta anterior. |
+| `dir` | Muestra el contenido de la carpeta actual. |
+
+### 3\. Compilar el programa
+
+Una vez ubicada la consola en la carpeta que contiene `Ejemplo.java`, se utiliza:
+
+```
+javac Ejemplo.java
+```
+
+El comando `javac` **compila el código fuente** y genera el archivo `.class` correspondiente.
+
+### 4\. Ejecutar el programa
+
+Después de compilarlo, se ejecuta mediante:
+
+```
+java Ejemplo
+```
+
+No es necesario escribir la extensión `.java` al utilizar el comando `java`.
+
+El proceso básico puede resumirse así:
+
+```
+Ejemplo.java
+     ↓
+javac Ejemplo.java
+     ↓
+Ejemplo.class
+     ↓
+java Ejemplo
+     ↓
+Programa ejecutándose
+```
+
+---
+
+## Anexo: Código ASCII
+
+El **código ASCII** (_American Standard Code for Information Interchange_) es un sistema utilizado para representar caracteres mediante valores numéricos. Permite representar letras, números, símbolos y algunos caracteres especiales.
+
+El código ASCII original fue definido en **1963** y utiliza **7 bits**, permitiendo representar **128 caracteres**, numerados del `0` al `127`.
+
+Los primeros 32 valores corresponden principalmente a caracteres de control y no son imprimibles.
+
+Posteriormente apareció el denominado **ASCII extendido**, que utiliza 8 bits y permite representar hasta **256 valores diferentes**, incorporando caracteres adicionales.
+
+### Resumen
+
+| Característica | ASCII |
+| --- | --- |
+| Año de definición | 1963 |
+| Bits originales | 7 bits |
+| Cantidad de caracteres | 128 |
+| Rango | 0 - 127 |
+| ASCII extendido | 8 bits |
+| Valores del extendido | Hasta 256 |
+
+El código ASCII permite que las computadoras puedan **representar y procesar caracteres mediante valores numéricos**, siendo uno de los sistemas fundamentales utilizados históricamente para la representación de texto.## Codigo Unicode
 
 ```java
 ```
