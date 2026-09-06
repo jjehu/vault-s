@@ -19,4 +19,4 @@ Una vez instalado:
 
 ---
 ## Temas
-- [Fundamentos](lg/java/java-1.md)
+- [Fundamentos](java-1.md)
