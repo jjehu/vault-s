@@ -1,5 +1,3 @@
-```java
-```
 # Fundamentos
 ## Métodos
 Un método es un bloque de código que realiza una tarea específica. Tiene un encabezado, nombre y parámetros. El método principal es main, que inicia la ejecución del programa. Los métodos pueden devolver valores o no (void).
@@ -1631,7 +1629,9 @@ Posteriormente apareció el denominado **ASCII extendido**, que utiliza 8 bits y
 | ASCII extendido | 8 bits |
 | Valores del extendido | Hasta 256 |
 
-El código ASCII permite que las computadoras puedan **representar y procesar caracteres mediante valores numéricos**, siendo uno de los sistemas fundamentales utilizados históricamente para la representación de texto.## Codigo Unicode
+El código ASCII permite que las computadoras puedan **representar y procesar caracteres mediante valores numéricos**, siendo uno de los sistemas fundamentales utilizados históricamente para la representación de texto.
 
-```java
-```
+[Código Ascii](https://elcodigoascii.com.ar/)
+
+## Codigo Unicode
+[Código Unicode](https://www.compart.com/en/unicode)
