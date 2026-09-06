@@ -156,18 +156,84 @@ Es importante diferenciar una cadena de un carácter:
 
 ## Secuencias de Escape
 Son caracteres especiales dentro de cadenas, como: 
-`\n` nueva línea\
-`\t` tabulador\
-`\\` barra invertida (`\`)\
-`\'` comilla simple (`'`)\
-`\"` comilla doble (`"`)
+- `\n` → nueva línea
+- `\t` → tabulador
+- `\\` → barra invertida (`\`)
+- `\'` → comilla simple (`'`)
+- `\"` → comilla doble (`"`)
 
 ## Variables
 Una variable es un nombre asociado a un espacio de memoria para almacenar un valor. Java es fuertemente tipado, por lo que cada variable debe declararse con un tipo. Es recomendable inicializarlas para evitar errores.
+Las variables se declaran empezando con el nombre del tipo de dato, seguido por el nombre o identificador de la variable, ejemplo:
+```java
+char caracter1;
+int Contador;
+boolean luzEncendida;
+```
+
+> [!IMPORTANT]
+> Al declarar variables, Java no asigna un valor por defecto y en ocasiones esto provoca errores.
+
 ## Operador de Asignación
 El operador = asigna un valor a una variable. La expresión a la derecha se evalúa y el resultado se almacena en la variable de la izquierda.
+Ejemplo:
+```java
+int numero = 123456;// se hace uso del operador de asignacion = y le damos el valor 123456
+char letra = 'a';
+float valorReal = 31.23f
+boolean luzEncendida = true;
+```
+> [!IMPORTANT]
+> Se debe cuidar que el valor a asignar a una variable, se encuentre dentro del rango válido del tipo de dato de la variable. 
+
 ## Conversión de Tipos de Datos (Cast)
 La conversión de tipos puede ser implícita (automática) o explícita (cast). Se usa para convertir valores entre tipos compatibles, cuidando los posibles errores por pérdida de información.
+
+Tipos de datos ordenados de menor a mayor:\
+Enteros: byte → short  → int → long\
+Reales: float → double\
+byte → short → int → float → long → double
+
+**Conversión Implicita (automática)** se presenta cuando se convierte un valor cuyo rango de tipo de dato es menor o igual al rango destinado.\
+Ejemplo
+```java
+public classs Ejemplo{
+  public static void main(String[] args){
+    int x=23;
+    short y=123;
+    x=y;//asignación válida.
+  }
+}
+```
+**Conversión Explícita (cast)** se presenta cuando se convierte un valor de tipo de dato de mayor rango a uno de menor rango, para ello el valor a convertir se antecede explícitamente con el tipo de dato destino, encerrado en paréntesis.\
+Ejemplo
+```java
+public class Ejemplo{
+  public static void main(String[] args){
+    int x=23;
+    short y=123;
+    y=(short) x;
+    System.out.println(x);
+    System.out.println(y);
+  }
+}
+```
+
+> [!IMPORTANT]
+> La conversión explícita corre el riesgo de la alteración del valor original cuando éste se encuentra fuera del rango del tipo destino y es de responsabilidad del programador cuidar ese aspecto.
+> ```java
+> public class Ejemplo (
+> public static void main(String[] args) [
+> int x=1000;
+> byte y= (byte) x;
+> System.out.printin(y);
+> double d=1e100;
+> float f=1f;
+> f=(float) d;
+> System.out.printin(f);
+> ) 
+> ```
+
 ## Constantes
 Una constante es un valor fijo que no cambia durante la ejecución. Se declara con la palabra final.
 ## Salida de Datos
@@ -195,3 +261,6 @@ Una expresión es una combinación de literales, variables y operadores que prod
 ## Creacion y ejecucion de un programa Java desde consola
 ## Codigo Ascii
 ## Codigo Unicode
+
+```java
+```
