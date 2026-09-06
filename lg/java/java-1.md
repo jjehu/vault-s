@@ -574,6 +574,125 @@ public class Ejemplof {
 }
 ```
 ## Entrada de datos
+La entrada de datos es el proceso mediante el cual una computadora recibe información desde diferentes dispositivos, como el teclado, el ratón, el escáner, el disco duro o una memoria flash, y la lleva a la memoria principal de la computadora.\
+El teclado es el dispositivo de entrada más utilizado, ya que permite escribir números, palabras y diferentes tipos de información.
+
+Para que un programa pueda recibir información del usuario, necesitamos crear un canal por donde puedan pasar los datos. En Java, una de las clases que permite hacer esto es `Scanner`.
+Primero debemos importar la clase `Scanner` y después crear un objeto que nos permita utilizarla:
+```java
+import java.util.Scanner;//permite utilizar la clase Scanner
+
+public class Ejemplo {
+    public static void main(String[] args) {
+        Scanner nombre = new Scanner(System.in);//crea un objeto para recibir los datos, System.in indica que los datos seran introducidos por el usuario mediante la entrada estandar, normalmente teclado
+    }
+}
+```
+La clase Scanner tiene diferentes métodos para leer distintos tipos de datos. El programa normalmente espera hasta que el usuario escriba el dato y presione Enter.
+- `next()` → permite ingresar una palabra.
+- `nextLine()` → permite ingresar una frase o una línea completa.
+- `nextByte()` → permite ingresar un número de tipo byte.
+- `nextShort()` → permite ingresar un número de tipo short.
+- `nextInt()` → permite ingresar un número entero de tipo int.
+- `nextLong()` → permite ingresar un número entero de tipo long.
+- `nextFloat()` → permite ingresar un número decimal de tipo float.
+- `nextDouble()` → permite ingresar un número decimal de tipo double.
+- `nextBoolean()` → permite ingresar un valor lógico: true o false.
+
+```
+import java.util.Scanner;
+
+public class Ejemplo {
+    public static void main(String[] args) {
+        Scanner tec = new Scanner(System.in);
+
+        System.out.print("Escriba un número de tipo byte: ");
+        byte numero1 = tec.nextByte();
+        System.out.println("Su número es: " + numero1);
+
+        System.out.print("Escriba un número de tipo short: ");
+        short numero2 = tec.nextShort();
+        System.out.println("Su número es: " + numero2);
+
+        System.out.print("Escriba un número de tipo int: ");
+        int numero3 = tec.nextInt();
+        System.out.println("Su número es: " + numero3);
+
+        System.out.print("Escriba un número de tipo long: ");
+        long numero4 = tec.nextLong();
+        System.out.println("Su número es: " + numero4);
+
+        System.out.print("Escriba un número de tipo float: ");
+        float numero5 = tec.nextFloat();
+        System.out.println("Su número es: " + numero5);
+
+        System.out.print("Escriba un número de tipo double: ");
+        double numero6 = tec.nextDouble();
+        System.out.println("Su número es: " + numero6);
+
+        System.out.print("Escriba un valor booleano: ");
+        boolean logico = tec.nextBoolean();
+        System.out.println("Su valor booleano es: " + logico);
+
+        System.out.print("Escriba una palabra: ");
+        String palabra = tec.next();
+        System.out.println("Su palabra es: " + palabra);
+
+        tec.nextLine();
+
+        System.out.print("Escriba una frase: ");
+        String frase = tec.nextLine();
+        System.out.println("Su frase es: " + frase);
+    }
+}
+```
+**buffer**\
+Cuando se transfieren datos entre dos dispositivos, es posible que uno sea mucho más rápido que el otro. Por ejemplo, la memoria RAM es mucho más rápida que una impresora.
+
+Si ambos dispositivos se comunicaran directamente, el dispositivo más lento podría hacer que el dispositivo rápido tuviera que esperar.
+
+Para evitar esto, se utiliza una memoria intermedia llamada buffer.
+
+El buffer almacena temporalmente los datos mientras espera que el dispositivo más lento pueda procesarlos. De esta manera, el dispositivo rápido puede continuar trabajando sin tener que esperar constantemente al dispositivo lento.
+
+> [!CAUTION]
+> **Problema del buffer con Scanner**\
+> Un problema común en Java aparece cuando utilizamos `nextInt()` y después queremos utilizar `nextLine()`.\
+> Por ejemplo:
+> ```java
+> int n = tec.nextInt();
+> String cad = tec.nextLine();
+> ```
+> Después de escribir el número y presionar `Enter`, `nextInt()` lee el número, pero el carácter correspondiente al salto de línea queda dentro del buffer.\
+> Cuando se ejecuta `nextLine()`, este método encuentra ese salto de línea y considera que el usuario ya terminó de escribir. Por eso, la variable `cad` puede quedar vacía.
+>
+> **¿Cómo solucionar el problema?**\
+> Para solucionar este problema, debemos utilizar un `nextLine()` adicional inmediatamente después de leer el número.
+> Este `nextLine()` sirve para consumir o limpiar el salto de línea que quedó en el buffer.
+> ```java
+> import java.util.Scanner;
+>
+> public class Ejemplo {
+>     public static void main(String[] args) {
+>         int n;
+>         String cad;
+>
+>         Scanner tec = new Scanner(System.in);
+>
+>         n = tec.nextInt();
+>
+>         // Limpia el salto de línea que quedó en el buffer
+>         tec.nextLine();
+>
+>         // Ahora se puede leer correctamente la frase
+>         cad = tec.nextLine();
+>
+>         System.out.println(n);
+>         System.out.println(cad);
+>     }
+> }
+> ```
+
 ## Estructuras de control
 ## Contadores y acumuladores
 ## Metodos definidos por el usuario
