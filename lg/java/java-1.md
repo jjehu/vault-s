@@ -1,14 +1,71 @@
+```java
+```
 # Fundamentos
 ## Métodos
 Un método es un bloque de código que realiza una tarea específica. Tiene un encabezado, nombre y parámetros. El método principal es main, que inicia la ejecución del programa. Los métodos pueden devolver valores o no (void).
+
+Estructura general de un método:
+```java
+  public [static] tipoDevuelto nombreMetodo(listaParámetros)[
+    // lista de instrucciones;
+    [return valor];
+  )
+```
+El método principal figura de la siguiente forma:
+```java
+public static void main(String[] args){
+  // instrucciones;
+}
+```
+
 ## Identificadores
 Son nombres únicos para clases, métodos, variables, etc. Deben comenzar con una letra y pueden contener letras, dígitos, guiones bajos o el símbolo $. Son sensibles a mayúsculas y minúsculas.
+
+Ejemplo de identificador:
+```
+saldoCuenta
+saldo_cuenta
+```
+Tres variables distintas (por que es sensible a mayúsculas y minúsculas):
+```
+contador
+CONTADOR
+Contador
+```
 ## Palabras Reservadas
-Java tiene palabras reservadas que no pueden usarse como identificadores, como class, public, static, if, else, entre otras.
+Java tiene palabras reservadas que no pueden usarse como identificadores:
+| Column1 | Column2 | Column3 | Column4 | Column5 |
+| :---: | :---: | :---: | :---: | :---: |
+| abstract | continue | for | new | switch |
+| assert | default | goto | package | synchronized |
+| boolean | do | if | private | this |
+| break | double | implements | protected | throw |
+| byte | else | import | public | throws |
+| case | enum | instanceof | return | transient |
+| catch | extends | int | short | try |
+| char | final | interface | static | void |
+| class | finally | long | strictfp | volatile |
+| const | float | native | super | while |
+
 ## Comentarios
-Los comentarios documentan el código y pueden ser de línea (//) o de bloque (/* ... */). Son ignorados por el compilador y ayudan a entender el programa.
+Los comentarios documentan el código y pueden ser de línea (//) o de bloque (/* y */). Son ignorados por el compilador y ayudan a entender el programa.
+Ejemplo de comentarios:
+```java
+// Este es un comentario de linea
+/* Programa
+demostrativo
+Hola Mundo
+*/
+public class Ejemplo{
+  public static void main(String[] args){
+    System.out.println("Hola Mundo");// Esta es una instruccion de impresion, en este caso imprime "Hola Mundo"
+  }
+}
+```
+
 ## Tipos de Datos Primitivos
 Java tiene tipos de datos primitivos: enteros (byte, short, int, long), reales (float, double), caracteres (char) y booleanos (boolean). Cada uno tiene un rango y tamaño específico en memoria.
+
 ## Literales
 Los literales son valores fijos en el código, como números, caracteres, booleanos y cadenas. Pueden escribirse en diferentes bases (decimal, hexadecimal, octal) y con notación científica para reales.
 ## Secuencias de Escape
