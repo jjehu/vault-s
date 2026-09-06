@@ -235,17 +235,245 @@ public class Ejemplo{
 > ```
 
 ## Constantes
-Una constante es un valor fijo que no cambia durante la ejecución. Se declara con la palabra final.
+Una constante es un valor fijo que no cambia durante la ejecución. Se declara con la palabra final.\
+Ejemplo:
+```java
+final double pi = 3.141592653589;
+final boolean verdadero = true;
+```
+
 ## Salida de Datos
-La salida de datos se realiza principalmente en pantalla usando System.out.print(), System.out.println() y System.out.printf(). Permiten mostrar información y dar formato a la salida.
+La salida de datos se realiza principalmente en pantalla usando:
+- `System.out.print()` imprime en pantalla el contenido o argumento del parentesís.
+- `System.out.println()` imprime en pantalla el contenido o argumento del parentesís, agrega un salto de linea al finalizar.
+- `System.out.printf()` imprime contenido con un formato específico.
+Permiten mostrar información y dar formato a la salida.
+
+El método `printf()`, permite dar formato a la salida, para lo cuál se usan especificadores de formato, de acuerdo a la siguiente tabla:
+| Especificador | Descripción |
+|---|---|
+| `%b`, `%B` | Imprime un valor booleano |
+| `%c` | Imprime un carácter |
+| `%d`, `%i` | Imprime un número decimal con signo |
+| `%f` | Imprime un número de tipo `float` o `double` |
+| `%s`, `%S` | Imprime una cadena (String) |
+| `%u` | Imprime un número decimal sin signo |
+| `%o` | Imprime un número octal sin signo |
+| `%x`, `%X` | Imprime un número hexadecimal sin signo |
+| `%e`, `%E` | Imprime en notación científica |
+| `%n` | Nueva línea |
+| `%%` | Imprime el carácter `%` |
+
 ## Operadores Aritméticos
-Permiten realizar operaciones matemáticas básicas: suma (+), resta (-), multiplicación (*), división (/) y módulo (%). Existen operadores abreviados y de incremento/decremento.
+Permiten realizar operaciones matemáticas básicas:
+- Suma (`+`)
+- Resta (`-`)
+- Multiplicación (`*`)
+- División (`/`)
+- Módulo (`%`), residuo de la división entera
+Existen operadores abreviados y de incremento/decremento.
+
+Java soporta también un conjunto de operadores abreviados:
+| Nombre | Operador | Descripción |
+|---|---|---|
+| Suma o adición | `+=` | `x += y;` equivale a `x = x + y;` |
+| Resta o sustracción | `-=` | `x -= y;` equivale a `x = x - y;` |
+| Multiplicación o producto | `*=` | `x *= y;` equivale a `x = x * y;` |
+| Cociente de la división entera | `/=` | `x /= y;` equivale a `x = x / y;` |
+| Resto de la división entera | `%=` | `x %= y;` equivale a `x = x % y;` |
+| División | `/=` | `x /= y;` equivale a `x = x / y;` |
+| Pre incremento | `++` | `x = ++y;` equivale a `y = y + 1; x = y;` |
+| Pre decremento | `--` | `x = --y;` equivale a `y = y - 1; x = y;` |
+| Post incremento | `++` | `x = y++;` equivale a `x = y; y = y + 1;` |
+| Post decremento | `--` | `x = y--;` equivale a `x = y; y = y - 1;` |
+
+> [!IMPORTANT]
+> Los operadores de incremento y decremento tienen comportamientos diferentes si el operador precede o sucede a la variable:
+> ```java
+> public class Ejemplo (
+>   public static void main(String[] args) [
+>     int a=10, b=10, c, d;
+>     System.out.printin(a++);
+>     System.out.printin(a);
+>     System.out.printin(++b);
+>     System.out.printin(b);
+>     c=--a*2;
+>     d=b--*2;
+>     System.out.printin(c);
+>     System.out.printin(d);
+>   }
+> }
+> ```
+
+Existen valores especiales de los números reales de Java, que son:
+- `Infinity` : significa infinito y se obtiene cuándo el resultado de una operación tiende a +/- infinito
+- `NaN` : significa Not As Number (no es un número), y se obtiene cuando el resultado de una operación númerica no corresponde a un número.
+
 ## Operadores de Relación
-Comparan dos valores y devuelven un booleano: igual (==), diferente (!=), mayor (>), menor (<), mayor o igual (>=), menor o igual (<=).
+Comparan dos valores y devuelven un booleano:
+- Igual (`==`)
+- Diferente (`!=`)
+- Mayor (`>`)
+- Menor (`<`)
+- Mayor o igual (`>=`)
+- Menor o igual (`<=`)
+
+Ejemplo:
+```java
+public class Main {
+    public static void main(String[] args) {
+        int a = 200;
+        double b = 50.5;
+        char c = 'm';
+        char d = 'n';
+
+        System.out.print("a=");
+        System.out.println(a);
+        System.out.print("b=");
+        System.out.println(b);
+        System.out.print("c=");
+        System.out.println(c);
+        System.out.print("d=");
+        System.out.println(d);
+
+        System.out.print("a mayor que b, es: ");
+        System.out.println(a > b);
+        System.out.print("a igual que b, es: ");
+        System.out.println(a == b);
+        System.out.print("a diferente que b, es: ");
+        System.out.println(a != b);
+        System.out.print("a menor que b, es: ");
+        System.out.println(a < b);
+
+        System.out.print("c mayor que d, es: ");
+        System.out.println(c > d);
+        System.out.print("c menor que d, es: ");
+        System.out.println(c < d);
+
+        System.out.print("a mayor que c, es: ");
+        System.out.println(a > c);
+        System.out.print("a menor que c, es: ");
+        System.out.println(a < c);
+
+        System.out.print("b mayor que c, es: ");
+        System.out.println(b > c);
+        System.out.print("b menor que c, es: ");
+        System.out.println(b < c);
+    }
+}
+```
+
 ## Operadores Lógicos
-Relacionan valores booleanos: not (!), and (&&), or (||), xor. Se usan para construir expresiones lógicas complejas.
+Relacionan valores booleanos:
+- not (`!`)
+- and (`&&`)
+- or (`||`)
+- xor u or exclusivo (`^`)
+Se usan para construir expresiones lógicas complejas.
+
+```java
+public class Ejemplo {
+    public static void main(String[] args) {
+        int a = 5, b = 5, c = 10;
+        boolean resultado;
+
+        System.out.println("Si: a = 5; b = 5; c = 10, entonces:");
+        System.out.println();
+
+        resultado = (a == b) && (c > b);
+        System.out.print("(a == b) && (c > b) es igual a ");
+        System.out.println(resultado);
+
+        resultado = (a == b) && (c < b);
+        System.out.print("(a == b) && (c < b) es igual a ");
+        System.out.println(resultado);
+
+        resultado = (a == b) || (c < b);
+        System.out.print("(a == b) || (c < b) es igual a ");
+        System.out.println(resultado);
+
+        resultado = (a != b) || (c < b);
+        System.out.print("(a != b) || (c < b) es igual a ");
+        System.out.println(resultado);
+
+        resultado = !(a == b);
+        System.out.print("!(a == b) es igual a ");
+        System.out.println(resultado);
+
+        resultado = !(a != b);
+        System.out.print("!(a != b) es igual a ");
+        System.out.println(resultado);
+    }
+}   
+```
+```
+Si: a = 5; b = 5; c = 10, entonces:
+
+(a == b) && (c > b) es igual a true
+(a == b) && (c < b) es igual a false
+(a == b) || (c < b) es igual a true
+(a != b) || (c < b) es igual a false
+!(a == b) es igual a false
+!(a != b) es igual a true   
+```
+
 ## Operadores de Bit
-Operan a nivel binario sobre valores enteros: not (~), or (|), and (&), desplazamientos (<<, >>, >>>). Permiten manipular bits directamente.
+Son herramientas de programación que trabajan directamente con la representación binaria de los números enteros (incluyendo el tipo char) y devuelven un resultado de tipo entero.
+Operan a nivel binario sobre valores enteros:
+- not (`~`)
+- or (`|`)
+- and (`&`)
+- desplazamientos (izquierdo `<<`, derecho `>>`, derecho sin signo `>>>`)
+Permiten manipular bits directamente.
+
+### El operador Not
+Cuando aplicas el operador Not a un número positivo, invierte sus ceros y unos.\
+Ejemplo: Al aplicarlo a 12 (en binario 00001100), se invierte a 11110011.\
+Como las computadoras usan el sistema de complemento a dos para representar números negativos, ese patrón de bits equivale exactamente a -13.
+
+### Operadores binarios bit a bit
+Salvo el Not, los demás evalúan el primer bit del primer número con el primer bit del segundo, y así sucesivamente.\
+Ejemplo: Al operar 14 (00001110) y 119 (01110111) bit a bit, se obtiene 6 (00000110), ya que se comparan las posiciones correspondientes de ambos números.\
+
+```java
+import java.util.Scanner;
+
+public class OperadoresBitsEjemplos {
+    public static void main(String[] argumentos) {
+        
+        System.out.println("--- EJEMPLO 1: Operador Not (-) ---");
+        // El operador Not (complemento a 1) invierte los bits del número.
+        // En complemento a dos, invertir los bits de 12 da como resultado -13.
+        
+        byte a = 12;
+        System.out.println("Not de byte 12: " + (-a)); // Resultado: -13
+        
+        short b = 12;
+        System.out.println("Not de short 12: " + (-b)); // Resultado: -13
+        
+        int c = 12;
+        System.out.println("Not de int 12: " + (-c)); // Resultado: -13
+        
+        long d = 12;
+        System.out.println("Not de long 12: " + (-d)); // Resultado: -13
+
+
+        System.out.println("\n--- EJEMPLO 2: Operador And bit a bit (&) ---");
+        // El operador opera bit a bit entre dos números.
+        // 14 en binario:  00001110
+        // 119 en binario: 01110111
+        // Resultado AND:  00000110 (que equivale a 6)
+        
+        byte num1 = 14;
+        byte num2 = 119;
+        System.out.println("Resultado byte (14 & 119): " + (num1 & num2)); // Resultado: 6
+
+        int num3 = 14;
+        int num4 = 139; // Nota: el texto original usa 139 o 119, opera bit a bit según corresponda
+        System.out.println("Resultado int (14 & 139): " + (num3 & num4)); // Resultado: 6
+    }
+}
+```
 ## Operador de Concatenación
 El operador + une cadenas de texto. Si uno de los operandos es una cadena, el otro se convierte automáticamente a cadena.
 ## Evaluación de Expresiones
