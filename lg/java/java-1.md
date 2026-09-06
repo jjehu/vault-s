@@ -694,6 +694,280 @@ El buffer almacena temporalmente los datos mientras espera que el dispositivo m�
 > ```
 
 ## Estructuras de control
+Las estructuras de control permiten determinar el orden en que se ejecutan las instrucciones de un programa. Gracias a ellas, un programa puede ejecutar instrucciones de manera secuencial, tomar decisiones según determinadas condiciones y repetir un conjunto de instrucciones las veces que sean necesarias.
+
+En programación, las estructuras de control se clasifican principalmente en **estructuras secuenciales, selectivas y repetitivas**.
+
+### Estructuras secuenciales
+Las estructuras secuenciales son aquellas en las que las instrucciones se ejecutan una después de otra, siguiendo el orden en el que fueron escritas.\
+Este tipo de estructura es la más sencilla, ya que no necesita condiciones ni repeticiones. Cada instrucción se ejecuta una sola vez antes de pasar a la siguiente.
+
+Ejemplo
+```java
+public class Secuencial {
+    public static void main(String[] args) {
+        int numero1 = 10;
+        int numero2 = 5;
+
+        int suma = numero1 + numero2;
+
+        System.out.println("El resultado es: " + suma);
+    }
+}
+```
+En este ejemplo, primero se almacenan dos números, después se realiza la suma y finalmente se muestra el resultado. Las instrucciones se ejecutan de forma secuencial.
+
+### Estructuras selectivas
+Las estructuras selectivas permiten que un programa tome decisiones. Para ello, se evalúa una condición y, dependiendo de si esta se cumple o no, se ejecuta un determinado bloque de instrucciones.
+
+Entre las estructuras selectivas más utilizadas se encuentran `if`, `if-else`, el operador condicional y `switch`.
+
+#### Estructura if (si)
+La estructura `if` permite ejecutar un bloque de código únicamente cuando una determinada condición es verdadera.\
+Su sintaxis básica es:
+```java
+if (condicion) {
+    // Instrucciones
+}
+```
+Ejemplo
+```java
+int edad = 20;
+
+if (edad >= 18) {
+    System.out.println("La persona es mayor de edad.");
+}
+```
+En este caso, el programa comprueba si la variable `edad` es mayor o igual a 18. Si la condición es verdadera, se muestra el mensaje.\
+Si la condición es falsa, el programa continúa con la siguiente instrucción sin ejecutar el contenido del `if`.
+
+#### Estructura if else
+La estructura `if-else` permite establecer dos posibles caminos. Si la condición es verdadera, se ejecuta el bloque correspondiente al `if`; si es falsa, se ejecuta el bloque correspondiente al `else`.
+
+Su sintaxis es:
+```java
+if (condicion) {
+    // Instrucciones si la condición es verdadera
+} else {
+    // Instrucciones si la condición es falsa
+}
+```
+Ejemplo
+```java
+int edad = 16;
+
+if (edad >= 18) {
+    System.out.println("La persona es mayor de edad.");
+} else {
+    System.out.println("La persona es menor de edad.");
+}
+```
+En este ejemplo, el programa evalúa la edad. Como el valor es menor que 18, se ejecuta el bloque `else`.
+
+Esta estructura resulta útil cuando existen dos alternativas posibles.
+
+#### Operador condicional
+El operador condicional, también conocido como **operador ternario**, permite realizar una selección sencilla utilizando una sola línea de código.
+
+Su sintaxis es:
+```
+condicion ? valorSiVerdadero : valorSiFalso;
+```
+Ejemplo
+```java
+int edad = 20;
+
+String resultado = (edad >= 18) ? "Mayor de edad" : "Menor de edad";
+
+System.out.println(resultado);
+```
+En este caso, el programa comprueba la condición `edad >= 18`.
+- Si la condición es verdadera, se asigna `"Mayor de edad"`.
+- Si la condición es falsa, se asigna `"Menor de edad"`.
+El operador condicional es recomendable cuando la decisión es sencilla. Para situaciones más complejas, generalmente resulta más conveniente utilizar `if-else`.
+
+#### Estructura switch
+La estructura `switch` permite seleccionar una opción entre diferentes alternativas a partir del valor de una variable o expresión.
+
+Su sintaxis básica es:
+```java
+switch (variable) {
+    case valor1:
+        // Instrucciones
+        break;
+
+    case valor2:
+        // Instrucciones
+        break;
+
+    default:
+        // Instrucciones
+}
+```
+Ejemplo
+```java
+int dia = 3;
+
+switch (dia) {
+    case 1:
+        System.out.println("Lunes");
+        break;
+
+    case 2:
+        System.out.println("Martes");
+        break;
+
+    case 3:
+        System.out.println("Miércoles");
+        break;
+
+    case 4:
+        System.out.println("Jueves");
+        break;
+
+    case 5:
+        System.out.println("Viernes");
+        break;
+
+    default:
+        System.out.println("Día no válido");
+}
+```
+En este ejemplo, el programa analiza el valor de la variable `dia`. Como su valor es `3`, se ejecuta el `case 3` y se muestra `"Miércoles"`.
+
+La sentencia `break` permite finalizar el `switch` una vez encontrada la opción correspondiente. El bloque `default` se ejecuta cuando ninguno de los casos coincide con el valor evaluado.
+
+### Estructuras repetitivas
+Las estructuras repetitivas permiten ejecutar un bloque de instrucciones varias veces mientras se cumpla una determinada condición o durante un número específico de repeticiones.\
+Estas estructuras también reciben el nombre de bucles o ciclos.
+
+Las estructuras repetitivas más utilizadas son `for`, `while` y `do-while`.
+
+#### Estructura for
+La estructura `for` se utiliza principalmente cuando se conoce de antemano la cantidad de veces que debe repetirse un bloque de código.
+
+Su sintaxis es:
+```java
+for (inicialización; condición; actualización) {
+    // Instrucciones
+}
+```
+Ejemplo
+```java
+for (int i = 1; i <= 5; i++) {
+    System.out.println("Número: " + i);
+}
+```
+El funcionamiento del ciclo es el siguiente:
+1. Se inicializa la variable `i` con el valor `1`.
+2. Se comprueba si `i <= 5`.
+3. Si la condición es verdadera, se ejecuta el bloque de código.
+4. Se incrementa `i` en uno.
+5. El proceso se repite hasta que la condición sea falsa.
+
+Como resultado, se muestran los números del 1 al 5.
+
+#### Estructura while
+La estructura `while` permite repetir un bloque de instrucciones mientras una condición sea verdadera.
+
+Su sintaxis es:
+```java
+while (condicion) {
+    // Instrucciones
+}
+```
+
+La condición se evalúa **antes** de ejecutar el bloque. Por esta razón, es posible que el bloque no se ejecute ninguna vez si la condición es falsa desde el comienzo.
+
+Ejemplo
+```java
+int contador = 1;
+
+while (contador <= 5) {
+    System.out.println("Número: " + contador);
+    contador++;
+}
+```
+En este ejemplo, el programa comienza con `contador` igual a 1. Mientras el valor sea menor o igual a 5, se muestra el número y posteriormente se incrementa el contador.\
+Cuando `contador` alcanza el valor 6, la condición deja de cumplirse y el ciclo termina.
+
+#### Estructura do-while
+La estructura `do-while` también permite repetir instrucciones mientras una condición sea verdadera. La diferencia principal respecto a `while` es que en `do-while` el bloque de instrucciones se ejecuta al menos una vez, ya que la condición se evalúa al final.
+
+Su sintaxis es:
+```java
+do {
+    // Instrucciones
+} while (condicion);
+```
+Ejemplo
+```java
+int contador = 1;
+
+do {
+    System.out.println("Número: " + contador);
+    contador++;
+} while (contador <= 5);
+```
+En este caso, el bloque se ejecuta primero y después se comprueba la condición. El proceso continúa mientras `contador` sea menor o igual a 5.
+
+Una característica importante es que, aunque la condición fuera falsa desde el inicio, el bloque se ejecutaría una vez.
+
+Por ejemplo:
+```java
+int numero = 10;
+
+do {
+    System.out.println("Este mensaje se muestra una vez.");
+} while (numero < 5);
+```
+Aunque `numero < 5` es falso, el mensaje se muestra una vez porque la condición se comprueba después de ejecutar el bloque.
+
+#### Sentencias break y continue
+Las sentencias `break` y `continue` permiten modificar el comportamiento normal de los ciclos.
+
+**Sentencia break**\
+La sentencia `break` permite terminar inmediatamente un ciclo o una estructura `switch`.
+
+Ejemplo
+```java
+for (int i = 1; i <= 10; i++) {
+    if (i == 5) {
+        break;
+    }
+
+    System.out.println(i);
+}
+```
+En este ejemplo, el ciclo normalmente llegaría hasta 10. Sin embargo, cuando `i` alcanza el valor 5, se ejecuta `break` y el ciclo termina.
+
+Por lo tanto, se muestran los números del 1 al 4.
+
+**Sentencia continue**\
+La sentencia `continue` permite omitir la iteración actual y continuar con la siguiente repetición del ciclo.
+
+Ejemplo
+```java
+for (int i = 1; i <= 5; i++) {
+    if (i == 3) {
+        continue;
+    }
+
+    System.out.println(i);
+}
+```
+Cuando `i` tiene el valor 3, se ejecuta `continue`. Esto hace que el programa omita esa iteración y continúe con el siguiente valor.
+
+El resultado será:
+```
+1
+2
+4
+5
+```
+
+Por lo tanto, mientras `break` termina completamente el ciclo, `continue` omite únicamente la iteración actual.
+
 ## Contadores y acumuladores
 ## Metodos definidos por el usuario
 ## Bibliotecas predefinidas
