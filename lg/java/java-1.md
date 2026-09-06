@@ -475,11 +475,104 @@ public class OperadoresBitsEjemplos {
 }
 ```
 ## Operador de Concatenación
-El operador + une cadenas de texto. Si uno de los operandos es una cadena, el otro se convierte automáticamente a cadena.
+En programación, el signo `+` tiene una doble función: además de sumar números, sirve para unir textos (operación conocida como concatenación).\
+> Regla clave: Si al menos uno de los elementos que se unen es un texto (string), el otro valor se convierte automáticamente en texto y se pegan ambos.
+
+Ejemplo práctico\
+El siguiente código muestra cómo combinar textos, números, variables y constantes utilizando el operador `+`:
+```java
+public class Ejemplof {
+    public static void main(String[] args) {
+        final String despedida = "ADIOS";
+        String título = "Ingeniería";
+        String carrera = "Informática";
+        int año = 2020;
+        float avance = 24.59f;
+
+        // Une textos y variables
+        System.out.println("Estudio " + título + " " + carrera);
+        
+        // Convierte el número decimal a texto y lo une
+        System.out.println("Tenemos un avance de " + avance + "%");
+        
+        // Permite realizar operaciones matemáticas (año + 5) antes de unirlas al texto
+        System.out.println("Estamos en " + año + " y pienso titularme el " + (año + 5));
+        
+        // Imprime una constante de texto simple
+        System.out.println(despedida);
+    }
+}
+```
+
 ## Evaluación de Expresiones
 Una expresión es una combinación de literales, variables y operadores que produce un resultado. En Java, las expresiones se escriben en formato lineal y se pueden usar paréntesis para definir el orden de evaluación.
 
+Ejemplos:\
+Matemática: $\frac{-b + \sqrt{b^2 - 4ac}}{2a}$\
+Lineal: (-b + raiz(b * b - 4 * a * c)) / (2 * a)
+
+Matemática: $\frac{a + b}{a - b} + x^2$\
+Lineal: (a + b) / (a - b) + x * x
+
+Matemática: $\frac{a + \sqrt{\frac{b}{x^3 + y}}}{a - \sin(b)}$\
+Lineal: (a + raiz(b / (x * x * x + y))) / (a - sin(b))
+
 ## Jerarquia de operadores
+Es el conjunto de reglas que determina el orden en que se evalúan las operaciones dentro de una expresión para obtener un resultado correcto.
+
+**Reglas básicas de evaluación**
+1. Paréntesis: Siempre se resuelven primero las expresiones entre paréntesis, empezando por los más internos.
+2. Precedencia: Los operadores con mayor jerarquía se calculan antes (ver tabla abajo).
+3. De izquierda a derecha: Los operadores con la misma jerarquía se evalúan en el orden en que aparecen de izquierda a derecha.
+
+| Jerarquía | Descripción | Operadores |
+|---|---|---|
+| 1 | Operadores posfijos | `Op++` `Op--` |
+| 2 | Operadores prefijos y unarios | `++Op` `--Op` `+Op` `-Op` `!` |
+| 3 | Multiplicación y división | `*` `/` `%` |
+| 4 | Suma y resta | `+` `-` |
+| 5 | Desplazamiento | `<<` `>>` `>>>` |
+| 6 | Operadores relacionales | `<` `>` `<=` `>=` |
+| 7 | Equivalencia | `==` `!=` |
+| 8 | Operador AND | `&` |
+| 9 | Operador XOR | `^` |
+| 10 | Operador OR | `|` |
+| 11 | AND booleano | `&&` |
+| 12 | OR booleano | `||` |
+| 13 | Condicional | `? :` |
+| 14 | Operadores de asignación | `=` `+=` `-=` `/=` `*=` `%=` `&=` `^=` `|=` `<<=` `>>=` `>>>=` |
+
+Ejemplos1:\
+- Expresión: `2 + 6 < 8 * 2 || 1 - 2 > -3 && 23 < 23`
+- Evaluación paso a paso:
+  - Multiplicación y sumas/restas aritméticas: `8 < 16 || -1 > -3 && 23 < 23`
+  - Operadores relacionales (`<`, `>`, `&&` implícito en relaciones): `true || true && false`
+  - Operador AND (`&&`): `true || false`
+  - Operador OR (`||`): `true`
+Código en Java:
+```java
+public class Ejemplof {
+    public static void main(String[] args) {
+        System.out.println(2 + 6 < 8 * 2 || 1 - 2 > -3 && 23 < 23);
+    }
+}
+```
+Ejemplos2:\
+- Expresión: `10 <= 2 * 5 && 3 < 4 || !(8 > 7) && 3 * 2 <= 4 * 2 - 1`
+- Evaluación paso a pragmatic:
+  - Operaciones aritméticas y negación: `10 <= 10 && 3 < 4 || false && 6 <= 7`
+  - Relaciones lógicas: `true && true || false && true`
+  - Operadores AND (`&&`): `true || false`
+  - Operador OR (`||`): `true`
+
+Código en Java:
+```java
+public class Ejemplof {
+    public static void main(String[] args) {
+        System.out.println(10 <= 2 * 5 && 3 < 4 || !(8 > 7) && 3 * 2 <= 4 * 2 - 1);
+    }
+}
+```
 ## Entrada de datos
 ## Estructuras de control
 ## Contadores y acumuladores
